@@ -67,7 +67,7 @@ public class Game extends JPanel {
         heroAircraft = new HeroAircraft(
                 Main.WINDOW_WIDTH / 2,
                 Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight() ,
-                0, 0, 500);
+                0, 0, 100);
 
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<>();
@@ -105,6 +105,7 @@ public class Game extends JPanel {
 
                 // 新敌机产生
                 if (rand <= 2) {
+                    // 产生精英敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         enemyAircrafts.add(new EliteEnemy(
                                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())),
@@ -116,6 +117,7 @@ public class Game extends JPanel {
                     }
                 }
                 else {
+                    // 产生普通敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         enemyAircrafts.add(new MobEnemy(
                                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
@@ -180,7 +182,10 @@ public class Game extends JPanel {
 
     private void shootAction() {
         // TODO 敌机射击
-
+        for (AbstractAircraft enemyAircraft : enemyAircrafts)
+        {
+            enemyBullets.addAll(enemyAircraft.shoot());
+        }
         // 英雄射击
         heroBullets.addAll(heroAircraft.shoot());
     }
@@ -209,7 +214,26 @@ public class Game extends JPanel {
      */
     private void crashCheckAction() {
         // TODO 敌机子弹攻击英雄
-
+        for (BaseBullet bullet : enemyBullets) {
+            if (bullet.notValid()) {
+                continue;
+            }
+            if (heroAircraft.notValid()) {
+                // 已被其他子弹击毁的敌机，不再检测
+                // 避免多个子弹重复击毁同一敌机的判定
+                continue;
+            }
+            if (heroAircraft.crash(bullet)) {
+                // 敌机撞击到英雄机子弹
+                // 敌机损失一定生命值
+                heroAircraft.decreaseHp(bullet.getPower());
+                bullet.vanish();
+            }
+//                // 英雄机 与 敌机 相撞，均损毁
+//                if (heroAircraft.crash(heroAircraft) || heroAircraft.crash(heroAircraft)) {
+//                    heroAircraft.vanish();
+//                    heroAircraft.decreaseHp(Integer.MAX_VALUE);
+            }
         // 英雄子弹攻击敌机
         for (BaseBullet bullet : heroBullets) {
             if (bullet.notValid()) {
