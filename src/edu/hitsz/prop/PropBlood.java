@@ -1,6 +1,7 @@
 package edu.hitsz.prop;
 
 /**
+ * 回血道具
  * @Author hhr
  */
 public class PropBlood extends Prop {

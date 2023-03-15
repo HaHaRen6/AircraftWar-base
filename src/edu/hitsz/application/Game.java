@@ -4,7 +4,6 @@ import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.prop.Prop;
-import edu.hitsz.prop.PropBlood;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import javax.swing.*;
@@ -105,17 +104,17 @@ public class Game extends JPanel {
                 System.out.println(time);
 
                 // 产生1-10的随机数，用于判断生成普通敌机还是精英敌机
-                int rand = (int) (Math.random() * 10) + 1;
+                int rand_enemy = (int) (Math.random() * 10) + 1;
 
                 // 新敌机产生
-                if (rand <= 4) {
+                if (rand_enemy <= 2) {
                     // 产生精英敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         enemyAircrafts.add(new EliteEnemy(
                                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())),
                                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
                                 0,
-                                7,
+                                6,
                                 90
                         ));
                     }
@@ -127,7 +126,7 @@ public class Game extends JPanel {
                                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
                                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
                                 0,
-                                7,
+                                6,
                                 30
                         ));
                     }
@@ -267,8 +266,11 @@ public class Game extends JPanel {
                         }
                         if (enemyAircraft.getClass() == EliteEnemy.class) {
                             score += 30;
-                            System.out.println("111");
-                            propBloods.addAll(enemyAircraft.dropBlood());
+                            int rand_prop = (int) (Math.random() * 10) + 1;
+                            if (rand_prop <= 2)
+                                propBloods.addAll(enemyAircraft.dropPropBlood());
+//                            else if (rand_prop <= 4)
+
                         }
                     }
                 }

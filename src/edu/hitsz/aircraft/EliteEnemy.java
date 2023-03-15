@@ -63,7 +63,7 @@ public class EliteEnemy extends AbstractAircraft {
         int x = this.getLocationX();
         int y = this.getLocationY() + direction*2;
         int speedX = 0;
-        int speedY = this.getSpeedY() + direction*5;
+        int speedY = this.getSpeedY() + direction*6;
         BaseBullet bullet;
         for(int i=0; i<shootNum; i++){
             // 子弹发射位置相对飞机位置向前偏移
@@ -75,12 +75,12 @@ public class EliteEnemy extends AbstractAircraft {
     }
 
 
-    public List<Prop> dropBlood(){
+    public List<Prop> dropPropBlood(){
         List<Prop> prop_res = new LinkedList<>();
         int x = this.getLocationX();
         int y = this.getLocationY() + direction*2;
         int speedX = 0;
-        int speedY = this.getSpeedY() + direction*2;
+        int speedY = this.getSpeedY() + direction;
         Prop dropBlood = new PropBlood(x, y, speedX, speedY);
         prop_res.add(dropBlood);
         return prop_res;

@@ -56,7 +56,7 @@ public class HeroAircraft extends AbstractAircraft {
         int x = this.getLocationX();
         int y = this.getLocationY() + direction*2;
         int speedX = 0;
-        int speedY = this.getSpeedY() + direction*10;
+        int speedY = this.getSpeedY() + direction*11;
         BaseBullet bullet;
         for(int i=0; i<shootNum; i++){
             // 子弹发射位置相对飞机位置向前偏移
@@ -68,7 +68,7 @@ public class HeroAircraft extends AbstractAircraft {
     }
 
     @Override
-    public List<Prop> dropBlood(){
+    public List<Prop> dropPropBlood(){
         return new LinkedList<>();
     }
 
