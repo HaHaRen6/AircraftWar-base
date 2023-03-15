@@ -5,10 +5,9 @@ import edu.hitsz.basic.AbstractFlyingObject;
 
 /**
  * 道具类。
- *
  * @author hhr
  */
-public class Prop extends AbstractFlyingObject{
+public abstract class Prop extends AbstractFlyingObject{
 
 //    private int power = 10;
 
@@ -36,7 +35,7 @@ public class Prop extends AbstractFlyingObject{
         }
     }
 
-//    public int getPower() {
-//        return power;
-//    }
+    public int getIncreaseHp(){
+        return 1;
+    }
 }

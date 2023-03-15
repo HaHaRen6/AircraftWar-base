@@ -4,6 +4,7 @@ import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.prop.Prop;
+import edu.hitsz.prop.PropBlood;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import javax.swing.*;
@@ -108,10 +109,10 @@ public class Game extends JPanel {
                 System.out.println(time);
 
                 // 产生1-10的随机数，用于判断生成普通敌机还是精英敌机
-                int rand_enemy = (int) (Math.random() * 10) + 1;
+                int rand_enemy = (int) (Math.random() * 100) + 1;
 
                 // 新敌机产生
-                if (rand_enemy <= 1) {
+                if (rand_enemy <= 15) {
                     // 产生精英敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         enemyAircrafts.add(new EliteEnemy(
@@ -247,7 +248,7 @@ public class Game extends JPanel {
      * 3. 英雄获得补给
      */
     private void crashCheckAction() {
-        // 敌机子弹攻击英雄
+        // 敌机子弹攻击英雄机
         for (BaseBullet bullet : enemyBullets) {
             if (bullet.notValid()) {
                 continue;
@@ -305,7 +306,37 @@ public class Game extends JPanel {
             }
         }
 
-        // Todo: 我方获得道具，道具生效
+        // 我方获得道具，道具生效
+        for (Prop prop_Blood : propBloods) {
+            // 加血道具
+            if (prop_Blood.notValid()) {
+                continue;
+            }
+            if (heroAircraft.crash(prop_Blood)) {
+                heroAircraft.increaseHp(prop_Blood.getIncreaseHp());
+                prop_Blood.vanish();
+            }
+        }
+        for (Prop prop_Bomb : propBombs) {
+            // 炸弹道具
+            if (prop_Bomb.notValid()) {
+                continue;
+            }
+            if (heroAircraft.crash(prop_Bomb)) {
+                System.out.println("BombSupply active!");
+                prop_Bomb.vanish();
+            }
+        }
+        for (Prop prop_Bullet : propBullets) {
+            // 火力道具
+            if (prop_Bullet.notValid()) {
+                continue;
+            }
+            if (heroAircraft.crash(prop_Bullet)) {
+                System.out.println("FireSupply active!");
+                prop_Bullet.vanish();
+            }
+        }
 
     }
 
