@@ -110,8 +110,8 @@ public class Game extends JPanel {
                                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())),
                                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
                                 0,
-                                10,
-                                100
+                                7,
+                                90
                         ));
                     }
                 }
@@ -121,7 +121,7 @@ public class Game extends JPanel {
                                 (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
                                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
                                 0,
-                                10,
+                                7,
                                 30
                         ));
                     }
