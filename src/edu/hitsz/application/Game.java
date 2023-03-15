@@ -67,7 +67,7 @@ public class Game extends JPanel {
         heroAircraft = new HeroAircraft(
                 Main.WINDOW_WIDTH / 2,
                 Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight() ,
-                0, 0, 100);
+                0, 0, 300);
 
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<>();
@@ -181,7 +181,7 @@ public class Game extends JPanel {
     }
 
     private void shootAction() {
-        // TODO 敌机射击
+        // 敌机射击
         for (AbstractAircraft enemyAircraft : enemyAircrafts)
         {
             enemyBullets.addAll(enemyAircraft.shoot());
@@ -213,27 +213,23 @@ public class Game extends JPanel {
      * 3. 英雄获得补给
      */
     private void crashCheckAction() {
-        // TODO 敌机子弹攻击英雄
+        // 敌机子弹攻击英雄
         for (BaseBullet bullet : enemyBullets) {
             if (bullet.notValid()) {
                 continue;
             }
             if (heroAircraft.notValid()) {
-                // 已被其他子弹击毁的敌机，不再检测
-                // 避免多个子弹重复击毁同一敌机的判定
+                // 避免多个子弹重复击毁的判定
                 continue;
             }
             if (heroAircraft.crash(bullet)) {
-                // 敌机撞击到英雄机子弹
-                // 敌机损失一定生命值
+                // 英雄机撞击到敌机子弹
+                // 英雄机损失一定生命值
                 heroAircraft.decreaseHp(bullet.getPower());
                 bullet.vanish();
             }
-//                // 英雄机 与 敌机 相撞，均损毁
-//                if (heroAircraft.crash(heroAircraft) || heroAircraft.crash(heroAircraft)) {
-//                    heroAircraft.vanish();
-//                    heroAircraft.decreaseHp(Integer.MAX_VALUE);
-            }
+        }
+
         // 英雄子弹攻击敌机
         for (BaseBullet bullet : heroBullets) {
             if (bullet.notValid()) {
@@ -252,7 +248,12 @@ public class Game extends JPanel {
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
                         // TODO 获得分数，产生道具补给
-                        score += 10;
+                        if (enemyAircraft.getClass() == MobEnemy.class) {
+                            score += 10;
+                        }
+                        if (enemyAircraft.getClass() == EliteEnemy.class) {
+                            score += 30;
+                        }
                     }
                 }
                 // 英雄机 与 敌机 相撞，均损毁
