@@ -2,6 +2,7 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.HeroBullet;
+import edu.hitsz.prop.Prop;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -64,6 +65,11 @@ public class HeroAircraft extends AbstractAircraft {
             res.add(bullet);
         }
         return res;
+    }
+
+    @Override
+    public List<Prop> dropBlood(){
+        return new LinkedList<>();
     }
 
 }

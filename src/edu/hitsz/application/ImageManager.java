@@ -6,6 +6,7 @@ import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.bullet.HeroBullet;
+import edu.hitsz.prop.PropBlood;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -57,7 +58,7 @@ public class ImageManager {
             CLASSNAME_IMAGE_MAP.put(EliteEnemy.class.getName(), ELITE_ENEMY_IMAGE);
             CLASSNAME_IMAGE_MAP.put(HeroBullet.class.getName(), HERO_BULLET_IMAGE);
             CLASSNAME_IMAGE_MAP.put(EnemyBullet.class.getName(), ENEMY_BULLET_IMAGE);
-//            CLASSNAME_IMAGE_MAP.put(PropBlood.class.getName(), PROP_BLOOD_IMAGE);
+            CLASSNAME_IMAGE_MAP.put(PropBlood.class.getName(), PROP_BLOOD_IMAGE);
 //            CLASSNAME_IMAGE_MAP.put(PropBomb.class.getName(), PROP_BOMB_IMAGE);
 //            CLASSNAME_IMAGE_MAP.put(PropBullet.class.getName(), PROP_BULLET_IMAGE);
 

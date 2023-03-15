@@ -4,6 +4,8 @@ import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.bullet.HeroBullet;
+import edu.hitsz.prop.Prop;
+import edu.hitsz.prop.PropBlood;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -72,4 +74,15 @@ public class EliteEnemy extends AbstractAircraft {
         return res;
     }
 
+
+    public List<Prop> dropBlood(){
+        List<Prop> prop_res = new LinkedList<>();
+        int x = this.getLocationX();
+        int y = this.getLocationY() + direction*2;
+        int speedX = 0;
+        int speedY = this.getSpeedY() + direction*2;
+        Prop dropBlood = new PropBlood(x, y, speedX, speedY);
+        prop_res.add(dropBlood);
+        return prop_res;
+    }
 }
