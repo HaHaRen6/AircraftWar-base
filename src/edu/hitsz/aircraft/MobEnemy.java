@@ -37,4 +37,13 @@ public class MobEnemy extends AbstractAircraft {
     public List<Prop> dropPropBlood(){
         return new LinkedList<>();
     }
-}
+
+    @Override
+    public List<Prop> dropPropBomb(){
+        return new LinkedList<>();
+    }
+
+    @Override
+    public List<Prop> dropPropBullet(){
+        return new LinkedList<>();
+    }}
