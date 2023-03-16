@@ -54,11 +54,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     public abstract List<BaseBullet> shoot();
 
 
-    public abstract List<Prop> dropPropBlood();
-
-    public abstract List<Prop> dropPropBomb();
-
-    public abstract List<Prop> dropPropBullet();
+    public abstract List<Prop> dropProp();
 
 }
 

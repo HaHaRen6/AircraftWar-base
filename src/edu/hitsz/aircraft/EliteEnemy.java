@@ -11,6 +11,7 @@ import edu.hitsz.prop.PropBullet;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 精英敌机，游戏玩家操控
@@ -82,46 +83,28 @@ public class EliteEnemy extends AbstractAircraft {
      * 通过掉落产生道具
      * @return 掉落的道具List
      */
-    public List<Prop> dropPropBlood() {
-        List<Prop> prop_res = new LinkedList<>();
+    public List<Prop> dropProp() {
+        List<Prop> propRes = new LinkedList<>();
         int x = this.getLocationX();
         int y = this.getLocationY() + direction * 2;
         int speedX = 0;
         int speedY = this.getSpeedY() + direction;
-        Prop dropPropBlood = new PropBlood(x, y, speedX, speedY);
-        prop_res.add(dropPropBlood);
-        return prop_res;
-    }
 
-    @Override
-    /**
-     * 通过掉落产生道具
-     * @return 掉落的道具List
-     */
-    public List<Prop> dropPropBomb() {
-        List<Prop> prop_res = new LinkedList<>();
-        int x = this.getLocationX();
-        int y = this.getLocationY() + direction * 2;
-        int speedX = 0;
-        int speedY = this.getSpeedY() + direction;
-        Prop dropPropBomb = new PropBomb(x, y, speedX, speedY);
-        prop_res.add(dropPropBomb);
-        return prop_res;
-    }
+        // 随机掉落一种道具（可能不掉）
+        Random randomProp = new Random();
+        int randomPropInt = randomProp.nextInt(10);
 
-    @Override
-    /**
-     * 通过掉落产生道具
-     * @return 掉落的道具List
-     */
-    public List<Prop> dropPropBullet() {
-        List<Prop> prop_res = new LinkedList<>();
-        int x = this.getLocationX();
-        int y = this.getLocationY() + direction * 2;
-        int speedX = 0;
-        int speedY = this.getSpeedY() + direction;
-        Prop dropPropBullet = new PropBullet(x, y, speedX, speedY);
-        prop_res.add(dropPropBullet);
-        return prop_res;
+        Prop dropProp;
+        if (randomPropInt < 3) {
+            dropProp = new PropBlood(x, y, speedX, speedY);
+            propRes.add(dropProp);
+        } else if (randomPropInt < 5) {
+            dropProp = new PropBomb(x, y, speedX, speedY);
+            propRes.add(dropProp);
+        } else if (randomPropInt < 8) {
+            dropProp = new PropBullet(x, y, speedX, speedY);
+            propRes.add(dropProp);
+        }
+        return propRes;
     }
 }

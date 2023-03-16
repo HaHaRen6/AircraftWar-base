@@ -1,5 +1,7 @@
 package edu.hitsz.prop;
 
+import edu.hitsz.aircraft.HeroAircraft;
+
 /**
  * 回血道具
  *
@@ -14,8 +16,8 @@ public class PropBlood extends Prop {
     }
 
     @Override
-    public int getIncreaseHp() {
-        return Hp_increase;
+    public void active() {
+        System.out.println("HP");
     }
 
 }

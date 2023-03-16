@@ -11,4 +11,8 @@ public class PropBomb extends Prop {
         super(locationX, locationY, speedX, speedY);
     }
 
+    @Override
+    public void active() {
+        System.out.println("BombSupply active!");
+    }
 }

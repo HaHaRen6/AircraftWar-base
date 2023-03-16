@@ -6,4 +6,8 @@ public class PropBullet extends Prop {
         super(locationX, locationY, speedX, speedY);
     }
 
+    @Override
+    public void active() {
+        System.out.println("FireSupply active!");
+    }
 }

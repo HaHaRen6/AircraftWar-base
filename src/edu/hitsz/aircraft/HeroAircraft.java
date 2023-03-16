@@ -71,17 +71,7 @@ public class HeroAircraft extends AbstractAircraft {
     }
 
     @Override
-    public List<Prop> dropPropBlood() {
-        return new LinkedList<>();
-    }
-
-    @Override
-    public List<Prop> dropPropBomb() {
-        return new LinkedList<>();
-    }
-
-    @Override
-    public List<Prop> dropPropBullet() {
+    public List<Prop> dropProp() {
         return new LinkedList<>();
     }
 

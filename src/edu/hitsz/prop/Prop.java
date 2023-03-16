@@ -36,7 +36,5 @@ public abstract class Prop extends AbstractFlyingObject {
         }
     }
 
-    public int getIncreaseHp() {
-        return 1;
-    }
+    public void active() {}
 }
