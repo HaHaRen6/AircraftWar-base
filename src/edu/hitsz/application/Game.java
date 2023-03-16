@@ -3,8 +3,7 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.prop.Prop;
-import edu.hitsz.prop.PropBlood;
+import edu.hitsz.prop.AbstractProp;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import javax.swing.*;
@@ -38,7 +37,7 @@ public class Game extends JPanel {
     private final List<AbstractAircraft> enemyAircrafts;
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
-    private final List<Prop> props;
+    private final List<AbstractProp> props;
     /**
      * 屏幕中出现的敌机最大数量
      */
@@ -210,7 +209,7 @@ public class Game extends JPanel {
     }
 
     private void propMoveAction() {
-        for (Prop prop : props) {
+        for (AbstractProp prop : props) {
             prop.forward();
         }
     }
@@ -276,7 +275,7 @@ public class Game extends JPanel {
         }
 
         // 我方获得道具，道具生效
-        for (Prop prop : props) {
+        for (AbstractProp prop : props) {
             // 加血道具
             if (prop.notValid()) {
                 continue;

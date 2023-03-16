@@ -2,7 +2,7 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.prop.Prop;
+import edu.hitsz.prop.AbstractProp;
 
 import java.util.List;
 
@@ -26,10 +26,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
     }
 
     public void increaseHp(int increase) {
-        if (hp + increase <= maxHp)
-            hp = hp + increase;
-        else
-            hp = maxHp;
+        hp = Math.min(hp + increase, maxHp);
     }
 
     public void decreaseHp(int decrease) {
@@ -53,8 +50,12 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
      */
     public abstract List<BaseBullet> shoot();
 
-
-    public abstract List<Prop> dropProp();
+    /**
+     * 道具掉落方法
+     *
+     * @return 返回道具
+     */
+    public abstract List<AbstractProp> dropProp();
 
 }
 

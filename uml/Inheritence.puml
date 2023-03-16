@@ -12,12 +12,13 @@ abstract class AbstractFlyingObject
     # height:int
     # isValid:boolean
 
-    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY)
+    + AbstractFlyingObject(int locationX, int locationY,
+        int speedX, int speedY)
     + forward():void
     + crash(AbstractFlyingObject flyingObject):boolean
-    + setLocation(double locationX, double locationY):void
     + getLocationX():int
     + getLocationY():int
+    + setLocation(double locationX, double locationY):void
     + getSpeedY():int
     + getImage():BufferedImage
     + getWidth():int
@@ -25,57 +26,127 @@ abstract class AbstractFlyingObject
     + notValid():boolean
     + vanish():void
 }
+
 abstract class AbstractAircraft
 {
 	# maxHp:int
     # hp:int
-    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
-    + decreaseHp(int decrease):void
+
+    + AbstractAircraft(int locationX, int locationY,
+        int speedX, int speedY, int hp)
+    + increaseHp(int increase): void
+    + decreaseHp(int decrease): void
     + getHp():int
-    + {abstract} shoot():List<BaseBullet>
- }
+    + {abstract} shoot(): List<BaseBullet>
+    + {abstract} dropProp(): List<Prop>
+}
+AbstractFlyingObject <|-- AbstractAircraft
 
 
 class HeroAircraft {
     - shootNum:int
     - power:int
     - direction:int
-    + HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+
+    + HeroAircraft(int locationX, int locationY,
+        int speedX, int speedY, int hp)
     + forward():void
     + shoot():List<BaseBullet>
+    + dropProp(): List<Prop>
 }
 
 AbstractAircraft <|-- HeroAircraft
 
 class MobEnemy {
-    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+
+    + MobEnemy(int locationX, int locationY,
+        int speedX, int speedY, int hp)
     + forward():void
     + shoot():List<BaseBullet>
+    + dropProp():List<Prop>
 }
 AbstractAircraft <|-- MobEnemy
+
+class BossEnemy {
+
+    + BossEnemy(int locationX, int locationY,
+        int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + dropProp():List<Prop>
+}
+AbstractAircraft <|-- BossEnemy
+
+class EliteAircraft {
+    - shootNum:int
+    - power:int
+    - direction:int
+
+    + EliteAircraft(int locationX, int locationY,
+        int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + dropProp():List<Prop>
+}
+AbstractAircraft <|-- EliteAircraft
+
+abstract class AbstractProp
+{
+    + AbstractProp(int locationX, int locationY,
+        int speedX, int speedY)
+    + forward():void
+    + {abstract} active(HeroAircraft heroAircraft):void
+}
+AbstractFlyingObject <|-- AbstractProp
+
+class PropBlood
+{
+    + PropBlood(int locationX, int locationY,
+        int speedX, int speedY)
+    + active(HeroAircraft heroAircraft):void
+}
+AbstractProp <|-- PropBlood
+PropBlood ..> HeroAircraft
+
+class PropBomb
+{
+
+    + PropBomb(int locationX, int locationY,
+        int speedX, int speedY)
+    + active(HeroAircraft heroAircraft):void
+}
+AbstractProp <|-- PropBomb
+
+class PropBullet
+{
+
+    + PropBullet(int locationX, int locationY,
+        int speedX, int speedY)
+    + active(HeroAircraft heroAircraft):void
+}
+AbstractProp <|-- PropBullet
 
 abstract class BaseBullet
 {
     - power:int
-    + BaseBullet(int locationX, int locationY, int speedX, int speedY, int power)
+
+    + BaseBullet(int locationX, int locationY,
+        int speedX, int speedY, int power)
     + forward():void
 	+ getPower():int
 }
+AbstractFlyingObject <|-- BaseBullet
 
 class HeroBullet {
     + HeroBullet(int locationX, int locationY,
-     int speedX, int speedY, int power)
+        int speedX, int speedY, int power)
 }
+BaseBullet <|-- HeroBullet
 
 class EnemyBullet {
     + EnemyBullet(int locationX, int locationY,
-     int speedX, int speedY, int power)
+        int speedX, int speedY, int power)
 }
-
-BaseBullet <|-- HeroBullet
 BaseBullet <|-- EnemyBullet
-
-AbstractFlyingObject <|-- AbstractAircraft
-AbstractFlyingObject <|-- BaseBullet
 
 @enduml

@@ -9,9 +9,9 @@ import edu.hitsz.basic.AbstractFlyingObject;
  *
  * @author hhr
  */
-public abstract class Prop extends AbstractFlyingObject {
+public abstract class AbstractProp extends AbstractFlyingObject {
 
-    public Prop(int locationX, int locationY, int speedX, int speedY) {
+    public AbstractProp(int locationX, int locationY, int speedX, int speedY) {
         super(locationX, locationY, speedX, speedY);
     }
 
@@ -35,6 +35,8 @@ public abstract class Prop extends AbstractFlyingObject {
     }
 
     /**
+     * 抽象方法active
+     * <p>
      * 道具起作用
      */
     public abstract void active(HeroAircraft heroAircraft);

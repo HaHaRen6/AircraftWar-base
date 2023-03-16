@@ -3,8 +3,7 @@ package edu.hitsz.aircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
-import edu.hitsz.bullet.HeroBullet;
-import edu.hitsz.prop.Prop;
+import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.prop.PropBlood;
 import edu.hitsz.prop.PropBomb;
 import edu.hitsz.prop.PropBullet;
@@ -83,8 +82,8 @@ public class EliteEnemy extends AbstractAircraft {
      * 通过掉落产生道具
      * @return 掉落的道具List
      */
-    public List<Prop> dropProp() {
-        List<Prop> propRes = new LinkedList<>();
+    public List<AbstractProp> dropProp() {
+        List<AbstractProp> propRes = new LinkedList<>();
         int x = this.getLocationX();
         int y = this.getLocationY() + direction * 2;
         int speedX = 0;
@@ -94,7 +93,7 @@ public class EliteEnemy extends AbstractAircraft {
         Random randomProp = new Random();
         int randomPropInt = randomProp.nextInt(10);
 
-        Prop dropProp;
+        AbstractProp dropProp;
         if (randomPropInt < 3) {
             dropProp = new PropBlood(x, y, speedX, speedY);
             propRes.add(dropProp);

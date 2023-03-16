@@ -60,9 +60,6 @@ public abstract class AbstractFlyingObject {
      */
     protected boolean isValid = true;
 
-//    public AbstractFlyingObject() {
-//    }
-
     public AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY) {
         this.locationX = locationX;
         this.locationY = locationY;
@@ -100,8 +97,11 @@ public abstract class AbstractFlyingObject {
      */
     public boolean crash(AbstractFlyingObject flyingObject) {
         // 缩放因子，用于控制 y轴方向区域范围
-        int factor = this instanceof AbstractAircraft ? 2 : 1; //我方
-        int fFactor = flyingObject instanceof AbstractAircraft ? 2 : 1;//对方
+
+        //我方
+        int factor = this instanceof AbstractAircraft ? 2 : 1;
+        //对方
+        int fFactor = flyingObject instanceof AbstractAircraft ? 2 : 1;
 
         //对方坐标、宽度、高度
         int x = flyingObject.getLocationX();

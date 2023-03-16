@@ -2,7 +2,7 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.prop.Prop;
+import edu.hitsz.prop.AbstractProp;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class MobEnemy extends AbstractAircraft {
     }
 
     @Override
-    public List<Prop> dropProp() {
+    public List<AbstractProp> dropProp() {
         return new LinkedList<>();
     }
 

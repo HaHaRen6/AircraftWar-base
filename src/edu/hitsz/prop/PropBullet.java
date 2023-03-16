@@ -2,7 +2,7 @@ package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
 
-public class PropBullet extends Prop {
+public class PropBullet extends AbstractProp {
 
     public PropBullet(int locationX, int locationY, int speedX, int speedY) {
         super(locationX, locationY, speedX, speedY);
