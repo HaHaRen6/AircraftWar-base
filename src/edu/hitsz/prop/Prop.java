@@ -1,5 +1,6 @@
 package edu.hitsz.prop;
 
+import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.AbstractFlyingObject;
 
@@ -10,11 +11,8 @@ import edu.hitsz.basic.AbstractFlyingObject;
  */
 public abstract class Prop extends AbstractFlyingObject {
 
-//    private int power = 10;
-
     public Prop(int locationX, int locationY, int speedX, int speedY) {
         super(locationX, locationY, speedX, speedY);
-//        this.power = power;
     }
 
     @Override
@@ -36,5 +34,8 @@ public abstract class Prop extends AbstractFlyingObject {
         }
     }
 
-    public void active() {}
+    /**
+     * 道具起作用
+     */
+    public abstract void active(HeroAircraft heroAircraft);
 }

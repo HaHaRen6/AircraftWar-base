@@ -1,5 +1,7 @@
 package edu.hitsz.prop;
 
+import edu.hitsz.aircraft.HeroAircraft;
+
 /**
  * 火力道具
  *
@@ -12,7 +14,7 @@ public class PropBomb extends Prop {
     }
 
     @Override
-    public void active() {
+    public void active(HeroAircraft heroAircraft) {
         System.out.println("BombSupply active!");
     }
 }

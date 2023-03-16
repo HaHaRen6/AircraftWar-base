@@ -9,15 +9,15 @@ import edu.hitsz.aircraft.HeroAircraft;
  */
 public class PropBlood extends Prop {
 
-    private int Hp_increase = 100;
+    private int hpIncrease = 100;
 
     public PropBlood(int locationX, int locationY, int speedX, int speedY) {
         super(locationX, locationY, speedX, speedY);
     }
 
     @Override
-    public void active() {
-        System.out.println("HP");
+    public void active(HeroAircraft heroAircraft) {
+        heroAircraft.increaseHp(hpIncrease);
     }
 
 }

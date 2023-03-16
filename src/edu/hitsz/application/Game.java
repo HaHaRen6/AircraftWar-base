@@ -282,7 +282,7 @@ public class Game extends JPanel {
                 continue;
             }
             if (heroAircraft.crash(prop)) {
-                prop.active();
+                prop.active(heroAircraft);
                 prop.vanish();
             }
         }

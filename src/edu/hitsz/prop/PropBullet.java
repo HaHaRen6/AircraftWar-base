@@ -1,5 +1,7 @@
 package edu.hitsz.prop;
 
+import edu.hitsz.aircraft.HeroAircraft;
+
 public class PropBullet extends Prop {
 
     public PropBullet(int locationX, int locationY, int speedX, int speedY) {
@@ -7,7 +9,7 @@ public class PropBullet extends Prop {
     }
 
     @Override
-    public void active() {
+    public void active(HeroAircraft heroAircraft) {
         System.out.println("FireSupply active!");
     }
 }
