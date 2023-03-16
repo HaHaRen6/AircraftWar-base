@@ -98,6 +98,7 @@ abstract class AbstractProp
     + {abstract} active(HeroAircraft heroAircraft):void
 }
 AbstractFlyingObject <|-- AbstractProp
+AbstractProp ..> HeroAircraft
 
 class PropBlood
 {
@@ -116,6 +117,7 @@ class PropBomb
     + active(HeroAircraft heroAircraft):void
 }
 AbstractProp <|-- PropBomb
+PropBomb ..> HeroAircraft
 
 class PropBullet
 {
@@ -125,6 +127,7 @@ class PropBullet
     + active(HeroAircraft heroAircraft):void
 }
 AbstractProp <|-- PropBullet
+PropBullet ..> HeroAircraft
 
 abstract class BaseBullet
 {
