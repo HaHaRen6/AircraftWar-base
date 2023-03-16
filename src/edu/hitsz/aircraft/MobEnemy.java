@@ -23,7 +23,7 @@ public class MobEnemy extends AbstractAircraft {
     public void forward() {
         super.forward();
         // 判定 y 轴向下飞行出界
-        if (locationY >= Main.WINDOW_HEIGHT ) {
+        if (locationY >= Main.WINDOW_HEIGHT) {
             vanish();
         }
     }
@@ -34,16 +34,17 @@ public class MobEnemy extends AbstractAircraft {
     }
 
     @Override
-    public List<Prop> dropPropBlood(){
+    public List<Prop> dropPropBlood() {
         return new LinkedList<>();
     }
 
     @Override
-    public List<Prop> dropPropBomb(){
+    public List<Prop> dropPropBomb() {
         return new LinkedList<>();
     }
 
     @Override
-    public List<Prop> dropPropBullet(){
+    public List<Prop> dropPropBullet() {
         return new LinkedList<>();
-    }}
+    }
+}

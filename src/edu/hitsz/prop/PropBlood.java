@@ -2,6 +2,7 @@ package edu.hitsz.prop;
 
 /**
  * 回血道具
+ *
  * @Author hhr
  */
 public class PropBlood extends Prop {
@@ -13,7 +14,7 @@ public class PropBlood extends Prop {
     }
 
     @Override
-    public int getIncreaseHp(){
+    public int getIncreaseHp() {
         return Hp_increase;
     }
 
