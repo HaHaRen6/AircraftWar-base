@@ -1,5 +1,6 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
@@ -17,7 +18,7 @@ import java.util.Random;
  *
  * @author hhr
  */
-public class EliteEnemy extends AbstractAircraft {
+public class EliteEnemy extends AbstractAircraft implements Enemy {
 
     /**攻击方式 */
 
@@ -97,10 +98,10 @@ public class EliteEnemy extends AbstractAircraft {
         if (randomPropInt < 3) {
             dropProp = new PropBlood(x, y, speedX, speedY);
             propRes.add(dropProp);
-        } else if (randomPropInt < 5) {
+        } else if (randomPropInt < 6) {
             dropProp = new PropBomb(x, y, speedX, speedY);
             propRes.add(dropProp);
-        } else if (randomPropInt < 8) {
+        } else if (randomPropInt < 9) {
             dropProp = new PropBullet(x, y, speedX, speedY);
             propRes.add(dropProp);
         }

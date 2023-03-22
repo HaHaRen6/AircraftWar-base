@@ -54,7 +54,7 @@ public class HeroAircraft extends AbstractAircraft {
                     heroAircraft = new HeroAircraft(
                             Main.WINDOW_WIDTH / 2,
                             Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
-                            0, 0, 500);
+                            0, 0, 1000);
                 }
             }
         }
@@ -85,11 +85,6 @@ public class HeroAircraft extends AbstractAircraft {
             res.add(bullet);
         }
         return res;
-    }
-
-    @Override
-    public List<AbstractProp> dropProp() {
-        return new LinkedList<>();
     }
 
 }

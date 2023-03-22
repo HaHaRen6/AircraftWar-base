@@ -50,13 +50,6 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
      */
     public abstract List<BaseBullet> shoot();
 
-    /**
-     * 道具掉落方法
-     *
-     * @return 返回道具
-     */
-    public abstract List<AbstractProp> dropProp();
-
 }
 
 

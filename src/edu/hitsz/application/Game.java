@@ -38,6 +38,9 @@ public class Game extends JPanel {
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
+    private EnemyFactory enemyFactory;
+    private AbstractAircraft enemy;
+
     /**
      * 屏幕中出现的敌机最大数量
      */
@@ -107,24 +110,16 @@ public class Game extends JPanel {
                 if (randEnemy.nextInt(100) < 15) {
                     // 产生精英敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
-                        enemyAircrafts.add(new EliteEnemy(
-                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())),
-                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.03),
-                                3,
-                                6,
-                                90
-                        ));
+                        enemyFactory = new EliteEnemyFactory();
+                        enemy = enemyFactory.createEnemy();
+                        enemyAircrafts.add(enemy);
                     }
                 } else {
                     // 产生普通敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
-                        enemyAircrafts.add(new MobEnemy(
-                                (int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.MOB_ENEMY_IMAGE.getWidth())),
-                                (int) (Math.random() * Main.WINDOW_HEIGHT * 0.03),
-                                0,
-                                6,
-                                30
-                        ));
+                        enemyFactory = new MobEnemyFactory();
+                        enemy = enemyFactory.createEnemy();
+                        enemyAircrafts.add(enemy);
                     }
                 }
                 // 飞机射出子弹
@@ -260,7 +255,7 @@ public class Game extends JPanel {
                         }
                         if (enemyAircraft instanceof EliteEnemy) {
                             score += 30;
-                            props.addAll(enemyAircraft.dropProp());
+                            props.addAll(((EliteEnemy) enemyAircraft).dropProp());
                         }
                     }
                 }
