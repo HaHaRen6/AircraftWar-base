@@ -5,16 +5,11 @@ import edu.hitsz.prop.AbstractProp;
 import java.util.List;
 
 /**
+ * 【工厂模式】Enemy接口，充当产品角色
+ *
  * @author hhr
  */
 public interface Enemy {
-
-    /**
-     * 前进方法
-     */
-    void forward();
-    // public 和 abstract 都是隐式的
-
     /**
      * 道具掉落方法
      *

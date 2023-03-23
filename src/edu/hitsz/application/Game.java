@@ -3,6 +3,9 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
+import edu.hitsz.factory.EliteEnemyFactory;
+import edu.hitsz.factory.EnemyFactory;
+import edu.hitsz.factory.MobEnemyFactory;
 import edu.hitsz.prop.AbstractProp;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
@@ -39,7 +42,6 @@ public class Game extends JPanel {
     private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
     private EnemyFactory enemyFactory;
-    private AbstractAircraft enemy;
 
     /**
      * 屏幕中出现的敌机最大数量
@@ -111,17 +113,14 @@ public class Game extends JPanel {
                     // 产生精英敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         enemyFactory = new EliteEnemyFactory();
-                        enemy = enemyFactory.createEnemy();
-                        enemyAircrafts.add(enemy);
                     }
                 } else {
                     // 产生普通敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         enemyFactory = new MobEnemyFactory();
-                        enemy = enemyFactory.createEnemy();
-                        enemyAircrafts.add(enemy);
                     }
                 }
+                enemyAircrafts.add(enemyFactory.createEnemy());
                 // 飞机射出子弹
                 shootAction();
             }
@@ -151,7 +150,6 @@ public class Game extends JPanel {
                 gameOverFlag = true;
                 System.out.println("Game Over!");
             }
-
         };
 
         /**

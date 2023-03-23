@@ -1,8 +1,12 @@
-package edu.hitsz.aircraft;
+package edu.hitsz.factory;
+
+import edu.hitsz.aircraft.EliteEnemy;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
 
 /**
+ * EliteEnemyFactory
+ *
  * @author hhr
  */
 public class EliteEnemyFactory implements EnemyFactory {

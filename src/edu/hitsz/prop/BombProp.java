@@ -7,9 +7,9 @@ import edu.hitsz.aircraft.HeroAircraft;
  *
  * @Author hhr
  */
-public class PropBomb extends AbstractProp {
+public class BombProp extends AbstractProp {
 
-    public PropBomb(int locationX, int locationY, int speedX, int speedY) {
+    public BombProp(int locationX, int locationY, int speedX, int speedY) {
         super(locationX, locationY, speedX, speedY);
     }
 

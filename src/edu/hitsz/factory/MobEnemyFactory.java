@@ -1,8 +1,12 @@
-package edu.hitsz.aircraft;
+package edu.hitsz.factory;
+
+import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
 
 /**
+ * 【工厂模式】实现工厂接口的具体工厂类，充当具体创建者角色
+ *
  * @author hhr
  */
 public class MobEnemyFactory implements EnemyFactory {
@@ -16,3 +20,4 @@ public class MobEnemyFactory implements EnemyFactory {
                 30);
     }
 }
+

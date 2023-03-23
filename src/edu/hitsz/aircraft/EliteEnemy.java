@@ -1,26 +1,31 @@
 package edu.hitsz.aircraft;
 
-import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
+import edu.hitsz.factory.BloodPropFactory;
+import edu.hitsz.factory.BombPropFactory;
+import edu.hitsz.factory.BulletPropFactory;
+import edu.hitsz.factory.PropFactory;
 import edu.hitsz.prop.AbstractProp;
-import edu.hitsz.prop.PropBlood;
-import edu.hitsz.prop.PropBomb;
-import edu.hitsz.prop.PropBullet;
+import edu.hitsz.prop.BloodProp;
+import edu.hitsz.prop.BombProp;
+import edu.hitsz.prop.BulletProp;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 /**
- * 精英敌机，游戏玩家操控
+ * 精英敌机
+ * <p>
+ * 【工厂模式】实现接口的实体类，充当具体产品角色
  *
  * @author hhr
  */
 public class EliteEnemy extends AbstractAircraft implements Enemy {
 
-    /**攻击方式 */
+    /* 攻击方式 */
 
     /**
      * 子弹一次发射数量
@@ -89,6 +94,7 @@ public class EliteEnemy extends AbstractAircraft implements Enemy {
         int y = this.getLocationY() + direction * 2;
         int speedX = 0;
         int speedY = this.getSpeedY() + direction;
+        PropFactory propFactory = null;
 
         // 随机掉落一种道具（可能不掉）
         Random randomProp = new Random();
@@ -96,14 +102,14 @@ public class EliteEnemy extends AbstractAircraft implements Enemy {
 
         AbstractProp dropProp;
         if (randomPropInt < 3) {
-            dropProp = new PropBlood(x, y, speedX, speedY);
-            propRes.add(dropProp);
+            propFactory = new BloodPropFactory();
         } else if (randomPropInt < 6) {
-            dropProp = new PropBomb(x, y, speedX, speedY);
-            propRes.add(dropProp);
+            propFactory = new BombPropFactory();
         } else if (randomPropInt < 9) {
-            dropProp = new PropBullet(x, y, speedX, speedY);
-            propRes.add(dropProp);
+            propFactory = new BulletPropFactory();
+        }
+        if (propFactory != null) {
+            propRes.add(propFactory.createProp(x, y, speedY));
         }
         return propRes;
     }

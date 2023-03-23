@@ -7,13 +7,14 @@ import edu.hitsz.aircraft.HeroAircraft;
  *
  * @Author hhr
  */
-public class PropBlood extends AbstractProp {
+public class BloodProp extends AbstractProp {
 
     private int hpIncrease = 100;
 
-    public PropBlood(int locationX, int locationY, int speedX, int speedY) {
+    public BloodProp(int locationX, int locationY, int speedX, int speedY) {
         super(locationX, locationY, speedX, speedY);
     }
+
     @Override
     public void active(HeroAircraft heroAircraft) {
         heroAircraft.increaseHp(hpIncrease);
