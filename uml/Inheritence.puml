@@ -38,10 +38,12 @@ abstract class AbstractAircraft
     + decreaseHp(int decrease): void
     + getHp():int
     + {abstract} shoot(): List<BaseBullet>
-    + {abstract} dropProp(): List<Prop>
 }
 AbstractFlyingObject <|-- AbstractAircraft
 
+interface Enemy{
+    + dropProp():List<AbstractProp>
+}
 
 class HeroAircraft {
     - shootNum:int
@@ -51,12 +53,12 @@ class HeroAircraft {
 
     - HeroAircraft(int locationX, int locationY,
         int speedX, int speedY, int hp)
+    + {static}getHeroAircraft():HeroAircraft
     + forward():void
     + shoot():List<BaseBullet>
-    + dropProp(): List<Prop>
 }
-
 AbstractAircraft <|-- HeroAircraft
+HeroAircraft <-- HeroAircraft
 
 class MobEnemy {
 
@@ -67,8 +69,12 @@ class MobEnemy {
     + dropProp():List<Prop>
 }
 AbstractAircraft <|-- MobEnemy
+Enemy <|.. MobEnemy
 
 class BossEnemy {
+    - shootNum:int
+    - power:int
+    - direction:int
 
     + BossEnemy(int locationX, int locationY,
         int speedX, int speedY, int hp)
@@ -77,19 +83,23 @@ class BossEnemy {
     + dropProp():List<Prop>
 }
 AbstractAircraft <|-- BossEnemy
+Enemy <|.. BossEnemy
+BossEnemy --> PropFactory
 
-class EliteAircraft {
+class EliteEnemy {
     - shootNum:int
     - power:int
     - direction:int
 
-    + EliteAircraft(int locationX, int locationY,
+    + EliteEnemy(int locationX, int locationY,
         int speedX, int speedY, int hp)
     + forward():void
     + shoot():List<BaseBullet>
     + dropProp():List<Prop>
 }
-AbstractAircraft <|-- EliteAircraft
+AbstractAircraft <|-- EliteEnemy
+Enemy <|.. EliteEnemy
+EliteEnemy --> PropFactory
 
 abstract class AbstractProp
 {
@@ -101,34 +111,36 @@ abstract class AbstractProp
 AbstractFlyingObject <|-- AbstractProp
 AbstractProp ..> HeroAircraft
 
-class PropBlood
+class BloodProp
 {
-    + PropBlood(int locationX, int locationY,
+    - hpIncrease:int
+
+    + BloodProp(int locationX, int locationY,
         int speedX, int speedY)
     + active(HeroAircraft heroAircraft):void
 }
-AbstractProp <|-- PropBlood
-PropBlood ..> HeroAircraft
+AbstractProp <|-- BloodProp
+BloodProp ..> HeroAircraft
 
-class PropBomb
+class BombProp
 {
 
-    + PropBomb(int locationX, int locationY,
+    + BombProp(int locationX, int locationY,
         int speedX, int speedY)
     + active(HeroAircraft heroAircraft):void
 }
-AbstractProp <|-- PropBomb
-PropBomb ..> HeroAircraft
+AbstractProp <|-- BombProp
+BombProp ..> HeroAircraft
 
-class PropBullet
+class BulletProp
 {
 
-    + PropBullet(int locationX, int locationY,
+    + BulletProp(int locationX, int locationY,
         int speedX, int speedY)
     + active(HeroAircraft heroAircraft):void
 }
-AbstractProp <|-- PropBullet
-PropBullet ..> HeroAircraft
+AbstractProp <|-- BulletProp
+BulletProp ..> HeroAircraft
 
 abstract class BaseBullet
 {
@@ -152,5 +164,49 @@ class EnemyBullet {
         int speedX, int speedY, int power)
 }
 BaseBullet <|-- EnemyBullet
+
+interface PropFactory {
+    + createProp(int x, int y, int speedY):AbstractProp
+}
+
+class BloodPropFactory {
+    + createProp(int x, int y, int speedY):BloodProp
+}
+PropFactory <|.. BloodPropFactory
+BloodProp <.. BloodPropFactory
+
+class BombPropFactory {
+    + createProp(int x, int y, int speedY):BombProp
+}
+PropFactory <|.. BombPropFactory
+BombProp <.. BombPropFactory
+
+class BulletPropFactory {
+    + createProp(int x, int y, int speedY):BulletProp
+}
+PropFactory <|.. BulletPropFactory
+BulletProp <.. BulletPropFactory
+
+interface EnemyFactory {
+    + createEnemy():AbstractAircraft
+}
+
+class EliteEnemyFactory {
+    + createEnemy():EliteEnemy
+}
+EnemyFactory <|.. EliteEnemyFactory
+EliteEnemy <.. EliteEnemyFactory
+
+class BossEnemyFactory {
+    + createEnemy():BossEnemy
+}
+EnemyFactory <|.. BossEnemyFactory
+BossEnemy <.. BossEnemyFactory
+
+class MobEnemyFactory {
+    + createEnemy():MobEnemy
+}
+EnemyFactory <|.. MobEnemyFactory
+MobEnemy <.. MobEnemyFactory
 
 @enduml

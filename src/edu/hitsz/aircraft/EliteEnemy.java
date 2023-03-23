@@ -100,7 +100,6 @@ public class EliteEnemy extends AbstractAircraft implements Enemy {
         Random randomProp = new Random();
         int randomPropInt = randomProp.nextInt(10);
 
-        AbstractProp dropProp;
         if (randomPropInt < 3) {
             propFactory = new BloodPropFactory();
         } else if (randomPropInt < 6) {
