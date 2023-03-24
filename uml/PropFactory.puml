@@ -9,7 +9,6 @@ abstract class AbstractProp
     + forward():void
     + {abstract} active(HeroAircraft heroAircraft):void
 }
-AbstractFlyingObject <|-- AbstractProp
 AbstractProp ..> HeroAircraft
 
 
