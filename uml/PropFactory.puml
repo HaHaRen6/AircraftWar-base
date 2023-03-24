@@ -14,9 +14,11 @@ abstract class AbstractAircraft
     + {abstract} shoot(): List<BaseBullet>
 }
 
+
 interface Enemy{
     + dropProp():List<AbstractProp>
 }
+
 
 class MobEnemy {
 
@@ -28,6 +30,7 @@ class MobEnemy {
 }
 AbstractAircraft <|-- MobEnemy
 Enemy <|.. MobEnemy
+
 
 class BossEnemy {
     - shootNum:int
@@ -43,6 +46,7 @@ class BossEnemy {
 AbstractAircraft <|-- BossEnemy
 Enemy <|.. BossEnemy
 
+
 class EliteEnemy {
     - shootNum:int
     - power:int
@@ -57,9 +61,11 @@ class EliteEnemy {
 AbstractAircraft <|-- EliteEnemy
 Enemy <|.. EliteEnemy
 
+
 interface EnemyFactory {
     + createEnemy():AbstractAircraft
 }
+
 
 class EliteEnemyFactory {
     + createEnemy():EliteEnemy
@@ -67,11 +73,13 @@ class EliteEnemyFactory {
 EnemyFactory <|.. EliteEnemyFactory
 EliteEnemy <.. EliteEnemyFactory
 
+
 class BossEnemyFactory {
     + createEnemy():BossEnemy
 }
 EnemyFactory <|.. BossEnemyFactory
 BossEnemy <.. BossEnemyFactory
+
 
 class MobEnemyFactory {
     + createEnemy():MobEnemy

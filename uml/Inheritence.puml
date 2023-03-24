@@ -27,6 +27,7 @@ abstract class AbstractFlyingObject
     + vanish():void
 }
 
+
 abstract class AbstractAircraft
 {
 	# maxHp:int
@@ -41,15 +42,17 @@ abstract class AbstractAircraft
 }
 AbstractFlyingObject <|-- AbstractAircraft
 
+
 interface Enemy{
     + dropProp():List<AbstractProp>
 }
+
 
 class HeroAircraft {
     - shootNum:int
     - power:int
     - direction:int
-    - {static} volatile HeroAircraft heroAircraft
+    - {static} heroAircraft:HeroAircraft
 
     - HeroAircraft(int locationX, int locationY,
         int speedX, int speedY, int hp)
@@ -59,6 +62,7 @@ class HeroAircraft {
 }
 AbstractAircraft <|-- HeroAircraft
 HeroAircraft <-- HeroAircraft
+
 
 class MobEnemy {
 
@@ -70,6 +74,7 @@ class MobEnemy {
 }
 AbstractAircraft <|-- MobEnemy
 Enemy <|.. MobEnemy
+
 
 class BossEnemy {
     - shootNum:int
@@ -86,6 +91,7 @@ AbstractAircraft <|-- BossEnemy
 Enemy <|.. BossEnemy
 BossEnemy --> PropFactory
 
+
 class EliteEnemy {
     - shootNum:int
     - power:int
@@ -101,6 +107,7 @@ AbstractAircraft <|-- EliteEnemy
 Enemy <|.. EliteEnemy
 EliteEnemy --> PropFactory
 
+
 abstract class AbstractProp
 {
     + AbstractProp(int locationX, int locationY,
@@ -110,6 +117,7 @@ abstract class AbstractProp
 }
 AbstractFlyingObject <|-- AbstractProp
 AbstractProp ..> HeroAircraft
+
 
 class BloodProp
 {
@@ -122,6 +130,7 @@ class BloodProp
 AbstractProp <|-- BloodProp
 BloodProp ..> HeroAircraft
 
+
 class BombProp
 {
 
@@ -132,6 +141,7 @@ class BombProp
 AbstractProp <|-- BombProp
 BombProp ..> HeroAircraft
 
+
 class BulletProp
 {
 
@@ -141,6 +151,7 @@ class BulletProp
 }
 AbstractProp <|-- BulletProp
 BulletProp ..> HeroAircraft
+
 
 abstract class BaseBullet
 {
@@ -153,11 +164,13 @@ abstract class BaseBullet
 }
 AbstractFlyingObject <|-- BaseBullet
 
+
 class HeroBullet {
     + HeroBullet(int locationX, int locationY,
         int speedX, int speedY, int power)
 }
 BaseBullet <|-- HeroBullet
+
 
 class EnemyBullet {
     + EnemyBullet(int locationX, int locationY,
@@ -165,9 +178,11 @@ class EnemyBullet {
 }
 BaseBullet <|-- EnemyBullet
 
+
 interface PropFactory {
     + createProp(int x, int y, int speedY):AbstractProp
 }
+
 
 class BloodPropFactory {
     + createProp(int x, int y, int speedY):BloodProp
@@ -175,11 +190,13 @@ class BloodPropFactory {
 PropFactory <|.. BloodPropFactory
 BloodProp <.. BloodPropFactory
 
+
 class BombPropFactory {
     + createProp(int x, int y, int speedY):BombProp
 }
 PropFactory <|.. BombPropFactory
 BombProp <.. BombPropFactory
+
 
 class BulletPropFactory {
     + createProp(int x, int y, int speedY):BulletProp
@@ -187,9 +204,11 @@ class BulletPropFactory {
 PropFactory <|.. BulletPropFactory
 BulletProp <.. BulletPropFactory
 
+
 interface EnemyFactory {
     + createEnemy():AbstractAircraft
 }
+
 
 class EliteEnemyFactory {
     + createEnemy():EliteEnemy
@@ -197,11 +216,13 @@ class EliteEnemyFactory {
 EnemyFactory <|.. EliteEnemyFactory
 EliteEnemy <.. EliteEnemyFactory
 
+
 class BossEnemyFactory {
     + createEnemy():BossEnemy
 }
 EnemyFactory <|.. BossEnemyFactory
 BossEnemy <.. BossEnemyFactory
+
 
 class MobEnemyFactory {
     + createEnemy():MobEnemy

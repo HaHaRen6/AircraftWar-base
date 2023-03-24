@@ -1,12 +1,10 @@
 @startuml EnemyFactory
 'https://plantuml.com/class-diagram
 
-
-
-
 interface Enemy{
     + dropProp():List<AbstractProp>
 }
+
 
 class MobEnemy {
 
@@ -18,6 +16,7 @@ class MobEnemy {
 }
 
 Enemy <|.. MobEnemy
+
 
 class BossEnemy {
     - shootNum:int
@@ -52,17 +51,20 @@ interface EnemyFactory {
     + createEnemy():AbstractAircraft
 }
 
+
 class EliteEnemyFactory {
     + createEnemy():EliteEnemy
 }
 EnemyFactory <|.. EliteEnemyFactory
 EliteEnemy <.. EliteEnemyFactory
 
+
 class BossEnemyFactory {
     + createEnemy():BossEnemy
 }
 EnemyFactory <|.. BossEnemyFactory
 BossEnemy <.. BossEnemyFactory
+
 
 class MobEnemyFactory {
     + createEnemy():MobEnemy

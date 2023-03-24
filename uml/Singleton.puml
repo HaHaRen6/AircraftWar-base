@@ -1,15 +1,15 @@
 @startuml Singleton
 
 class Game {
-
 }
 Game --> HeroAircraft
+
 
 class HeroAircraft {
     - shootNum:int
     - power:int
     - direction:int
-    - {static} volatile HeroAircraft heroAircraft
+    - {static} heroAircraft:HeroAircraft
 
     - HeroAircraft(int locationX, int locationY,
         int speedX, int speedY, int hp)
