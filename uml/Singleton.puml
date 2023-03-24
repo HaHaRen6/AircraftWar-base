@@ -1,0 +1,22 @@
+@startuml Singleton
+
+class Game {
+
+}
+Game --> HeroAircraft
+
+class HeroAircraft {
+    - shootNum:int
+    - power:int
+    - direction:int
+    - {static} volatile HeroAircraft heroAircraft
+
+    - HeroAircraft(int locationX, int locationY,
+        int speedX, int speedY, int hp)
+    + {static}getHeroAircraft():HeroAircraft
+    + forward():void
+    + shoot():List<BaseBullet>
+}
+HeroAircraft <-- HeroAircraft
+
+@enduml

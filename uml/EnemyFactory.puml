@@ -1,0 +1,73 @@
+@startuml EnemyFactory
+'https://plantuml.com/class-diagram
+
+
+
+
+interface Enemy{
+    + dropProp():List<AbstractProp>
+}
+
+class MobEnemy {
+
+    + MobEnemy(int locationX, int locationY,
+        int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + dropProp():List<Prop>
+}
+
+Enemy <|.. MobEnemy
+
+class BossEnemy {
+    - shootNum:int
+    - power:int
+    - direction:int
+
+    + BossEnemy(int locationX, int locationY,
+        int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + dropProp():List<Prop>
+}
+
+Enemy <|.. BossEnemy
+
+
+class EliteEnemy {
+    - shootNum:int
+    - power:int
+    - direction:int
+
+    + EliteEnemy(int locationX, int locationY,
+        int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + dropProp():List<Prop>
+}
+Enemy <|.. EliteEnemy
+
+
+interface EnemyFactory {
+    + createEnemy():AbstractAircraft
+}
+
+class EliteEnemyFactory {
+    + createEnemy():EliteEnemy
+}
+EnemyFactory <|.. EliteEnemyFactory
+EliteEnemy <.. EliteEnemyFactory
+
+class BossEnemyFactory {
+    + createEnemy():BossEnemy
+}
+EnemyFactory <|.. BossEnemyFactory
+BossEnemy <.. BossEnemyFactory
+
+class MobEnemyFactory {
+    + createEnemy():MobEnemy
+}
+EnemyFactory <|.. MobEnemyFactory
+MobEnemy <.. MobEnemyFactory
+
+@enduml
