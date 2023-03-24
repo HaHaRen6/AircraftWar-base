@@ -113,14 +113,16 @@ public class Game extends JPanel {
                     // 产生精英敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         enemyFactory = new EliteEnemyFactory();
+                        enemyAircrafts.add(enemyFactory.createEnemy());
                     }
                 } else {
                     // 产生普通敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         enemyFactory = new MobEnemyFactory();
+                        enemyAircrafts.add(enemyFactory.createEnemy());
                     }
                 }
-                enemyAircrafts.add(enemyFactory.createEnemy());
+
                 // 飞机射出子弹
                 shootAction();
             }
