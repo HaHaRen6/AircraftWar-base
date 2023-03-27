@@ -68,13 +68,15 @@ public class Game extends JPanel {
     /**
      * 产生Boss机的分数阈值
      */
-    private int bossScore = 300;
+    private int bossScore = 100;
     private int lastScore = 0;
 
     /**
      * 游戏结束标志
      */
     private boolean gameOverFlag = false;
+
+    private boolean addBoss = false;
 
     public Game() {
         // 创建英雄机
@@ -118,10 +120,11 @@ public class Game extends JPanel {
                 /**
                  * 新敌机产生
                  */
-                if ((score % bossScore == 0) && (score - lastScore > 0)) {
+                if (addBoss) {
                     // 产生Boss机
                     enemyFactory = new BossEnemyFactory();
                     enemyAircrafts.add(enemyFactory.createEnemy());
+                    addBoss = false;
                 } else if (randEnemy.nextInt(100) < 15) {
                     // 产生精英敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
@@ -264,6 +267,10 @@ public class Game extends JPanel {
                     if (enemyAircraft.notValid()) {
                         // 获得分数，产生道具补给
                         score += 10;
+                        if (score % 300 == 0)
+                        {
+                            addBoss = true;
+                        }
                         if (enemyAircraft instanceof BossEnemy) {
                             props.addAll(((BossEnemy) enemyAircraft).dropProp());
                         }
