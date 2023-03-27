@@ -14,6 +14,7 @@ public class BulletProp extends AbstractProp {
 
     @Override
     public void active(HeroAircraft heroAircraft) {
+//        heroAircraft.addShootNum();
         System.out.println("FireSupply active!");
     }
 }

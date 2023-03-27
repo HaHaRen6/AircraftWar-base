@@ -66,6 +66,10 @@ public class HeroAircraft extends AbstractAircraft {
         // 英雄机由鼠标控制，不通过forward函数移动
     }
 
+    public void addShootNum(){
+        shootNum++;
+    }
+
     @Override
     /**
      * 通过射击产生子弹

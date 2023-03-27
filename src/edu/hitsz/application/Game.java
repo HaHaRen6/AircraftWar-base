@@ -3,6 +3,7 @@ package edu.hitsz.application;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
+import edu.hitsz.factory.BossEnemyFactory;
 import edu.hitsz.factory.EliteEnemyFactory;
 import edu.hitsz.factory.EnemyFactory;
 import edu.hitsz.factory.MobEnemyFactory;
@@ -65,6 +66,12 @@ public class Game extends JPanel {
     private int cycleTime = 0;
 
     /**
+     * 产生Boss机的分数阈值
+     */
+    private int bossScore = 300;
+    private int lastScore = 0;
+
+    /**
      * 游戏结束标志
      */
     private boolean gameOverFlag = false;
@@ -108,8 +115,14 @@ public class Game extends JPanel {
                 // 产生随机数，用于判断生成普通敌机还是精英敌机
                 Random randEnemy = new Random();
 
-                // 新敌机产生
-                if (randEnemy.nextInt(100) < 15) {
+                /**
+                 * 新敌机产生
+                 */
+                if ((score % bossScore == 0) && (score - lastScore > 0)) {
+                    // 产生Boss机
+                    enemyFactory = new BossEnemyFactory();
+                    enemyAircrafts.add(enemyFactory.createEnemy());
+                } else if (randEnemy.nextInt(100) < 15) {
                     // 产生精英敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         enemyFactory = new EliteEnemyFactory();
@@ -122,6 +135,7 @@ public class Game extends JPanel {
                         enemyAircrafts.add(enemyFactory.createEnemy());
                     }
                 }
+                lastScore = score;
 
                 // 飞机射出子弹
                 shootAction();
@@ -207,7 +221,6 @@ public class Game extends JPanel {
         }
     }
 
-
     /**
      * 碰撞检测：
      * 1. 敌机攻击英雄
@@ -250,11 +263,11 @@ public class Game extends JPanel {
 
                     if (enemyAircraft.notValid()) {
                         // 获得分数，产生道具补给
-                        if (enemyAircraft instanceof MobEnemy) {
-                            score += 10;
+                        score += 10;
+                        if (enemyAircraft instanceof BossEnemy) {
+                            props.addAll(((BossEnemy) enemyAircraft).dropProp());
                         }
                         if (enemyAircraft instanceof EliteEnemy) {
-                            score += 30;
                             props.addAll(((EliteEnemy) enemyAircraft).dropProp());
                         }
                     }
