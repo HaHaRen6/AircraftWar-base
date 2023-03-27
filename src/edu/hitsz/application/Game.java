@@ -69,7 +69,6 @@ public class Game extends JPanel {
      * 产生Boss机的分数阈值
      */
     private int bossScore = 100;
-    private int lastScore = 0;
 
     /**
      * 游戏结束标志
@@ -138,7 +137,6 @@ public class Game extends JPanel {
                         enemyAircrafts.add(enemyFactory.createEnemy());
                     }
                 }
-                lastScore = score;
 
                 // 飞机射出子弹
                 shootAction();
@@ -267,7 +265,7 @@ public class Game extends JPanel {
                     if (enemyAircraft.notValid()) {
                         // 获得分数，产生道具补给
                         score += 10;
-                        if (score % 300 == 0)
+                        if (score % bossScore == 0)
                         {
                             addBoss = true;
                         }
