@@ -68,7 +68,7 @@ public class Game extends JPanel {
     /**
      * 产生Boss机的分数阈值
      */
-    private int bossScore = 100;
+    private int bossScore = 300;
 
     /**
      * 游戏结束标志
@@ -113,7 +113,7 @@ public class Game extends JPanel {
             if (timeCountAndNewCycleJudge()) {
                 System.out.println(time);
 
-                // 产生随机数，用于判断生成普通敌机还是精英敌机
+                // 产生随机数，用判断生成普通敌机还是精英敌机
                 Random randEnemy = new Random();
 
                 /**
@@ -265,8 +265,7 @@ public class Game extends JPanel {
                     if (enemyAircraft.notValid()) {
                         // 获得分数，产生道具补给
                         score += 10;
-                        if (score % bossScore == 0)
-                        {
+                        if (score % bossScore == 0) {
                             addBoss = true;
                         }
                         if (enemyAircraft instanceof BossEnemy) {
