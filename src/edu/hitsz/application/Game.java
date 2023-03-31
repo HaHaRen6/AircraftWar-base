@@ -35,7 +35,7 @@ public class Game extends JPanel {
     /**
      * 时间间隔(ms)，控制刷新频率
      */
-    private int timeInterval = 40;
+    private final int timeInterval = 40;
 
     private final HeroAircraft heroAircraft;
     private final List<AbstractAircraft> enemyAircrafts;
@@ -47,7 +47,7 @@ public class Game extends JPanel {
     /**
      * 屏幕中出现的敌机最大数量
      */
-    private int enemyMaxNumber = 5;
+    private final int enemyMaxNumber = 5;
 
     /**
      * 当前得分
@@ -62,13 +62,13 @@ public class Game extends JPanel {
      * 周期（ms)
      * 指示子弹的发射、敌机的产生频率
      */
-    private int cycleDuration = 600;
+    private final int cycleDuration = 600;
     private int cycleTime = 0;
 
     /**
      * 产生Boss机的分数阈值
      */
-    private int bossScore = 300;
+    private final int bossScore = 100;
 
     /**
      * 游戏结束标志
@@ -321,7 +321,7 @@ public class Game extends JPanel {
      * 重写paint方法
      * 通过重复调用paint方法，实现游戏动画
      *
-     * @param g
+     * @param g 图片
      */
     @Override
     public void paint(Graphics g) {

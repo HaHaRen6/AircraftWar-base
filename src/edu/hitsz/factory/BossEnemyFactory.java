@@ -14,7 +14,7 @@ public class BossEnemyFactory implements EnemyFactory {
 
     @Override
     public BossEnemy createEnemy() {
-        return new BossEnemy((int) (Math.random() * (Main.WINDOW_WIDTH - ImageManager.ELITE_ENEMY_IMAGE.getWidth())),
+        return new BossEnemy((int) (Math.random() * (Main.WINDOW_WIDTH - 2 * ImageManager.BOSS_ENEMY_IMAGE.getWidth()) + ImageManager.BOSS_ENEMY_IMAGE.getWidth()),
                 (int) (ImageManager.BOSS_ENEMY_IMAGE.getHeight() / 2),
                 5,
                 0,
