@@ -24,6 +24,7 @@ class BloodPropTest {
         propFactory = new BloodPropFactory();
         prop = propFactory.createProp(10, 10, 7);
         heroAircraft = HeroAircraft.getHeroAircraft();
+        heroAircraft.decreaseHp(500);
     }
 
     @AfterEach
@@ -43,8 +44,7 @@ class BloodPropTest {
     @Test
     void active() {
         System.out.println("**--- Test active method executed ---**");
-        heroAircraft.decreaseHp(500);
         prop.active(heroAircraft);
-        assertEquals(530, heroAircraft.getHp());
+        assertEquals(600, heroAircraft.getHp());
     }
 }
