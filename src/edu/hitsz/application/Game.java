@@ -68,7 +68,7 @@ public class Game extends JPanel {
     /**
      * 产生Boss机的分数阈值
      */
-    private final int bossScore = 100;
+    private final int bossScore = 300;
 
     /**
      * 游戏结束标志
