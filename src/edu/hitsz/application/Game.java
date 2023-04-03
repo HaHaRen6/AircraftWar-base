@@ -71,7 +71,7 @@ public class Game extends JPanel {
     private final int bossScore = 300;
 
     /**
-     * 游戏结束标志
+     * 游戏结束标志0
      */
     private boolean gameOverFlag = false;
 
