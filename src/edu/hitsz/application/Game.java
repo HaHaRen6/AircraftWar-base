@@ -8,6 +8,7 @@ import edu.hitsz.factory.EliteEnemyFactory;
 import edu.hitsz.factory.EnemyFactory;
 import edu.hitsz.factory.MobEnemyFactory;
 import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.shootStrategy.DirectShootStrategy;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import javax.swing.*;

@@ -5,6 +5,8 @@ import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.HeroBullet;
 import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.shootStrategy.DirectShootStrategy;
+import edu.hitsz.shootStrategy.ShootStrategy;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,7 +31,7 @@ public class HeroAircraft extends AbstractAircraft {
     private int power = 30;
 
     /**
-     * 子弹射击方向 (向上发射：1，向下发射：-1)
+     * 子弹射击方向 (向下发射：1，向上发射：-1)
      */
     private int direction = -1;
 
@@ -41,12 +43,17 @@ public class HeroAircraft extends AbstractAircraft {
      * @param speedX    英雄机射出的子弹的基准速度（英雄机无特定速度）
      * @param speedY    英雄机射出的子弹的基准速度（英雄机无特定速度）
      * @param hp        初始生命值
-     *
      */
     private HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY, hp);
     }
 
+
+    /**
+     * 【单例模式】创建英雄机
+     *
+     * @return 创建好的英雄机
+     */
     public static HeroAircraft getHeroAircraft() {
         if (heroAircraft == null) {
             synchronized (HeroAircraft.class) {
@@ -55,6 +62,7 @@ public class HeroAircraft extends AbstractAircraft {
                             Main.WINDOW_WIDTH / 2,
                             Main.WINDOW_HEIGHT - ImageManager.HERO_IMAGE.getHeight(),
                             0, 0, 1000);
+                    heroAircraft.setShootStrategy(new DirectShootStrategy());
                 }
             }
         }
@@ -66,9 +74,6 @@ public class HeroAircraft extends AbstractAircraft {
         // 英雄机由鼠标控制，不通过forward函数移动
     }
 
-    public void addShootNum(){
-        shootNum++;
-    }
 
     @Override
     /**
@@ -76,19 +81,7 @@ public class HeroAircraft extends AbstractAircraft {
      * @return 射击出的子弹List
      */
     public List<BaseBullet> shoot() {
-        List<BaseBullet> res = new LinkedList<>();
-        int x = this.getLocationX();
-        int y = this.getLocationY() + direction * 2;
-        int speedX = 0;
-        int speedY = this.getSpeedY() + direction * 11;
-        BaseBullet bullet;
-        for (int i = 0; i < shootNum; i++) {
-            // 子弹发射位置相对飞机位置向前偏移
-            // 多个子弹横向分散
-            bullet = new HeroBullet(x + (i * 2 - shootNum + 1) * 10, y, speedX, speedY, power);
-            res.add(bullet);
-        }
-        return res;
+        return shootStrategy.shoot(getLocationX(), getLocationY(), getSpeedY(), direction, power);
     }
 
 }

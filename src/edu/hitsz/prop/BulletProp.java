@@ -1,6 +1,7 @@
 package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.shootStrategy.ScatterShootStrategy;
 
 
 /**
@@ -14,7 +15,6 @@ public class BulletProp extends AbstractProp {
 
     @Override
     public void active(HeroAircraft heroAircraft) {
-//        heroAircraft.addShootNum();
-        System.out.println("FireSupply active!");
+        heroAircraft.setShootStrategy(new ScatterShootStrategy());
     }
 }

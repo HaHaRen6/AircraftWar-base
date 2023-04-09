@@ -1,9 +1,8 @@
 package edu.hitsz.aircraft;
 
-import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.shootStrategy.ShootStrategy;
 
 import java.util.List;
 
@@ -18,12 +17,17 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
      * 生命值
      */
     protected int maxHp;
+    protected ShootStrategy shootStrategy;
     protected int hp;
 
     public AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp) {
         super(locationX, locationY, speedX, speedY);
         this.hp = hp;
         this.maxHp = hp;
+    }
+
+    public void setShootStrategy(ShootStrategy shootStrategy) {
+        this.shootStrategy = shootStrategy;
     }
 
     public void increaseHp(int increase) {
@@ -44,6 +48,7 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
 
 
     /**
+     * 【策略模式】
      * 飞机射击方法，可射击对象必须实现
      *
      * @return 可射击对象需实现，返回子弹

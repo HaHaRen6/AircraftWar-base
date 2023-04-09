@@ -76,18 +76,19 @@ public class BossEnemy extends AbstractAircraft implements Enemy {
      * @return 射击出的子弹List
      */
     public List<BaseBullet> shoot() {
-        List<BaseBullet> res = new LinkedList<>();
-        int x = this.getLocationX();
-        int y = this.getLocationY() + direction * 2;
-        int speedX = 0;
-        BaseBullet bullet;
-        for (int i = 0; i < shootNum; i++) {
-            // 子弹发射位置相对飞机位置向前偏移
-            // 多个子弹横向分散
-            bullet = new EnemyBullet(x + (i * 2 - shootNum + 1) * 3, y + 95, speedX + (i * 2 - shootNum + 1), 12, power);
-            res.add(bullet);
-        }
-        return res;
+//        List<BaseBullet> res = new LinkedList<>();
+//        int x = this.getLocationX();
+//        int y = this.getLocationY() + direction * 60;
+//        int speedX = 0;
+//        BaseBullet bullet;
+//        for (int i = 0; i < shootNum; i++) {
+//            // 子弹发射位置相对飞机位置向前偏移
+//            // 多个子弹横向分散
+//            bullet = new EnemyBullet(x + (i * 2 - shootNum + 1) * 3, y, speedX + (i * 2 - shootNum + 1), 12, power);
+//            res.add(bullet);
+//        }
+//        return res;
+        return shootStrategy.shoot(getLocationX(), getLocationY(), getSpeedY(), direction, power);
     }
 
     @Override
