@@ -2,7 +2,6 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.factory.BloodPropFactory;
 import edu.hitsz.factory.BombPropFactory;
 import edu.hitsz.factory.BulletPropFactory;
@@ -21,14 +20,6 @@ import java.util.Random;
  * @author hhr
  */
 public class BossEnemy extends AbstractAircraft implements Enemy {
-
-    /* 攻击方式 */
-
-    /**
-     * 子弹一次发射数量
-     */
-    private final int shootNum = 3;
-
     /**
      * 道具掉落数量
      */
@@ -73,21 +64,11 @@ public class BossEnemy extends AbstractAircraft implements Enemy {
     /**
      * 通过射击产生子弹
      *
+     * 【策略模式】客户端(client)：利用 shootStrategy 产生特定的子弹
+     *
      * @return 射击出的子弹List
      */
     public List<BaseBullet> shoot() {
-//        List<BaseBullet> res = new LinkedList<>();
-//        int x = this.getLocationX();
-//        int y = this.getLocationY() + direction * 60;
-//        int speedX = 0;
-//        BaseBullet bullet;
-//        for (int i = 0; i < shootNum; i++) {
-//            // 子弹发射位置相对飞机位置向前偏移
-//            // 多个子弹横向分散
-//            bullet = new EnemyBullet(x + (i * 2 - shootNum + 1) * 3, y, speedX + (i * 2 - shootNum + 1), 12, power);
-//            res.add(bullet);
-//        }
-//        return res;
         return shootStrategy.shoot(getLocationX(), getLocationY(), getSpeedY(), direction, power);
     }
 
@@ -113,7 +94,7 @@ public class BossEnemy extends AbstractAircraft implements Enemy {
             } else {
                 propFactory = new BulletPropFactory();
             }
-            propRes.add(propFactory.createProp(x + (i * 2 - shootNum + 1) * 30, y + 95, 7));
+            propRes.add(propFactory.createProp(x + (i * 2 - dropNum + 1) * 30, y + 95, 7));
         }
         return propRes;
     }

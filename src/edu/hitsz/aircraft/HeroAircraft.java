@@ -78,6 +78,9 @@ public class HeroAircraft extends AbstractAircraft {
     @Override
     /**
      * 通过射击产生子弹
+     *
+     * 【策略模式】客户端(client)：利用 shootStrategy 产生特定的子弹
+     *
      * @return 射击出的子弹List
      */
     public List<BaseBullet> shoot() {

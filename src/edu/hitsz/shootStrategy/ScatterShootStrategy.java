@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * 【策略模式】具体策略(concrete strategy)
+ *
  * @author hhr
  */
 public class ScatterShootStrategy implements ShootStrategy {

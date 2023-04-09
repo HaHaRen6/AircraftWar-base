@@ -8,9 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * 【策略模式】具体策略(concrete strategy)
+ *
  * @author hhr
  */
-public class DirectShootStrategy implements ShootStrategy{
+public class DirectShootStrategy implements ShootStrategy {
     /**
      * 通过射击产生子弹
      *
@@ -28,7 +30,7 @@ public class DirectShootStrategy implements ShootStrategy{
             bullet = new HeroBullet(x, y, speedX, -11, power);
         } else {
             bullet = new EnemyBullet(x, y, speedX, speedY, power);
-            System.out.println("EneDic"+speedY);
+            System.out.println("EneDic" + speedY);
         }
         res.add(bullet);
 
