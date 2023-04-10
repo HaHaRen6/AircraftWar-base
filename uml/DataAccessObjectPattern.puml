@@ -2,7 +2,7 @@
 'https://plantuml.com/sequence-diagram
 
 interface ScoreDao{
-    + {abstract} addItem(int score):void
+    + {abstract} addItem(ScoreInfo scoreInfo):void
     + {abstract} getAllItems():void
     + {abstract} sortByScore():void
     + {abstract} outPutItems():void
@@ -10,7 +10,7 @@ interface ScoreDao{
 ScoreDao <.. Game
 
 class ScoreDaoImpl{
-    + addItem(int score):void
+    + addItem(ScoreInfo scoreInfo):void
     + getAllItems():void
     + sortByScore():void
     + outPutItems():void

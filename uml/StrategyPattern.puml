@@ -32,19 +32,22 @@ AbstractAircraft <|-- EliteEnemy
 DirectShootStrategy <.. EliteEnemy
 
 interface ShootStrategy{
-    + {abstract}shoot(int aircraftX, int aircraftY, int aircraftSpeedY, int direction, int power):List<BaseBullet>
+    + {abstract}shoot(int aircraftX, int aircraftY,
+    int aircraftSpeedY, int direction, int power):List<BaseBullet>
 }
 ShootStrategy <--* AbstractAircraft
 
 class ScatterShootStrategy{
     - shootNum:int
 
-    + shoot(int aircraftX, int aircraftY, int aircraftSpeedY, int direction, int power):List<BaseBullet>
+    + shoot(int aircraftX, int aircraftY,
+    int aircraftSpeedY, int direction, int power):List<BaseBullet>
 }
 ShootStrategy <|.. ScatterShootStrategy
 
 class DirectShootStrategy{
-    + shoot(int aircraftX, int aircraftY, int aircraftSpeedY, int direction, int power):List<BaseBullet>
+    + shoot(int aircraftX, int aircraftY,
+    int aircraftSpeedY, int direction, int power):List<BaseBullet>
 }
 ShootStrategy <|.. DirectShootStrategy
 

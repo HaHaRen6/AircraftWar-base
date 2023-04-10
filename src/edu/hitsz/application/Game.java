@@ -46,7 +46,15 @@ public class Game extends JPanel {
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
+
+    /**
+     * 【数据访问对象模式】数据对象
+     */
     private ScoreDao scoreDao = new ScoreDaoImpl();
+
+    /**
+     * 【工厂模式】敌机工厂
+     */
     private EnemyFactory enemyFactory;
 
     /**
@@ -170,18 +178,20 @@ public class Game extends JPanel {
                 // 游戏结束
                 System.out.println("Game Over!\n");
 
+                // 以设定格式获取当前时间
                 Date date = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd\tHH:mm");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
+
 
                 ScoreInfo scoreInfo = new ScoreInfo();
                 scoreInfo.setScore(score);
                 scoreInfo.setName("testUser");
                 scoreInfo.setDate(dateFormat.format(date));
+                scoreDao.addItem(scoreInfo);
 
                 System.out.println("***********************************");
                 System.out.println("\t\t\t 得分排行榜  \t\t\t");
                 System.out.println("***********************************");
-                scoreDao.addItem(score);
                 scoreDao.getAllItems();
                 scoreDao.sortByScore();
                 scoreDao.outPutItems();

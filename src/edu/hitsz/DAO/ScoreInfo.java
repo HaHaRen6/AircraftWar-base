@@ -1,6 +1,8 @@
 package edu.hitsz.DAO;
 
 /**
+ * 【数据访问对象模式】数据对象实体类
+ *
  * @author hhr
  */
 public class ScoreInfo {

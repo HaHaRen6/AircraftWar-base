@@ -1,9 +1,6 @@
 package edu.hitsz.DAO;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 【数据访问对象模式】DAO实现类
+ *
  * @author hhr
  */
 public class ScoreDaoImpl implements ScoreDao {
@@ -20,7 +19,7 @@ public class ScoreDaoImpl implements ScoreDao {
         scoreInfos = new ArrayList<>();
     }
 
-    public void addItem(int score) {
+    public void addItem(ScoreInfo scoreInfo) {
 
         File scoreFile = new File("score/score.txt");
         OutputStream fOut = null;
@@ -33,14 +32,12 @@ public class ScoreDaoImpl implements ScoreDao {
             // 构建OutputStreamWriter对象,参数可以指定编码,默认为操作系统默认编码
             writer = new OutputStreamWriter(fOut, "UTF-8");
 
-            Date date = new Date();
-            String string = "testUser";
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
-
             // 写入到缓冲区
-            writer.append(String.valueOf(score)).append("\t").append(string).append("\t");
-            writer.append(dateFormat.format(date)).append("\n");
+            writer.append(String.valueOf(scoreInfo.getScore())).append("\t");
+            writer.append(scoreInfo.getName()).append("\t");
+            writer.append(scoreInfo.getDate()).append("\n");
 
+            // 刷新缓冲区（不知道有没有用）
             writer.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -67,9 +64,10 @@ public class ScoreDaoImpl implements ScoreDao {
             reader = new BufferedReader(fileReader);
             String line = "";
             while ((line = reader.readLine()) != null) {
-                // 按 \t 分割
+                // 按 \t 分割，存在parts里
                 String[] parts = line.split("\t");
 
+                // 写入数据对象
                 ScoreInfo temp = new ScoreInfo();
                 temp.setScore(Integer.parseInt(parts[0]));
                 temp.setName(parts[1]);

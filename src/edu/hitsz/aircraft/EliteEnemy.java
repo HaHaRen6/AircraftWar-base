@@ -16,6 +16,8 @@ import java.util.Random;
  * 精英敌机
  * <p>
  * 【工厂模式】实现接口的实体类，充当具体产品角色
+ * <p>
+ * 【策略模式】客户端(client)：根据 shootStrategy 产生特定的子弹
  *
  * @author hhr
  */
@@ -53,8 +55,6 @@ public class EliteEnemy extends AbstractAircraft implements Enemy {
     @Override
     /**
      * 通过射击产生子弹
-     *
-     * 【策略模式】客户端(client)：利用 shootStrategy 产生特定的子弹
      *
      * @return 射击出的子弹List
      */

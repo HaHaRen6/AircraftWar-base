@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 所有种类飞机的抽象父类：
  * 敌机（BOSS, ELITE, MOB），英雄飞机
- *
+ * <p>
  * 【策略模式】上下文(context)：维护指向具体策略的引用，且仅通过策略接口与该对象进行交流
  *
  * @author hitsz + hhr
@@ -28,6 +28,12 @@ public abstract class AbstractAircraft extends AbstractFlyingObject {
         this.maxHp = hp;
     }
 
+    /**
+     * 【策略模式】
+     * 设置发射策略
+     *
+     * @param shootStrategy 射击策略
+     */
     public void setShootStrategy(ShootStrategy shootStrategy) {
         this.shootStrategy = shootStrategy;
     }

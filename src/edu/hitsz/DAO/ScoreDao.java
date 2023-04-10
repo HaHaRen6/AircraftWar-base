@@ -1,15 +1,17 @@
 package edu.hitsz.DAO;
 
 /**
+ * 【数据访问对象模式】DAO接口
+ *
  * @author hhr
  */
 public interface ScoreDao {
     /**
-     * 往文件内写入分数
+     * 往txt文件内写入一条记录
      *
-     * @param score 待写入的分数
+     * @param scoreInfo 数据对象
      */
-    void addItem(int score);
+    void addItem(ScoreInfo scoreInfo);
 
     /**
      * 从txt文件获取对象
