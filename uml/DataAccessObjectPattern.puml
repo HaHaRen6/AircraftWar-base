@@ -1,0 +1,17 @@
+@startuml DataAccessObjectPattern
+'https://plantuml.com/sequence-diagram
+
+interface ScoreDao{
+    + {abstract} addItem(int score):void
+    + {abstract} getAllItem():void
+}
+
+class ScoreDaoImpl{
+    + addItem(int score):void
+    + getAllItem():void
+}
+ScoreDao <|..ScoreDaoImpl
+
+
+
+@enduml

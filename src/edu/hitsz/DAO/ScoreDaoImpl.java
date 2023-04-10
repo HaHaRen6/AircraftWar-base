@@ -8,11 +8,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author hhr
  */
 public class ScoreDaoImpl implements ScoreDao {
+    private List<ScoreInfo> scoreInfos;
+
+    public ScoreDaoImpl(){
+        scoreInfos = new ArrayList<>();
+
+    }
+
     public void addItem(int score) {
 
         File scoreFile = new File("score/score.txt");
@@ -28,7 +36,7 @@ public class ScoreDaoImpl implements ScoreDao {
 
             Date date = new Date();
             String string = "testUser";
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd\tHH:mm");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
 
             // 写入到缓冲区
             writer.append(String.valueOf(score)).append("\t").append(string).append("\t");
@@ -55,7 +63,7 @@ public class ScoreDaoImpl implements ScoreDao {
 
         BufferedReader reader = null;
         FileReader fileReader = null;
-        ArrayList<String> items = new ArrayList<String>();
+        ArrayList<String> items = new ArrayList<>();
         String[][] data = new String[1000][4];
         int cnt;
         cnt = 0;
@@ -82,9 +90,9 @@ public class ScoreDaoImpl implements ScoreDao {
 
             // 打印排序好的记录
             for (int i = 0; i < cnt; i++) {
-                System.out.print("第"+(i+1)+"名\t");
+                System.out.print("第" + (i + 1) + "名\t");
                 for (String s : data[i]) {
-                    System.out.print(s+"\t");
+                    System.out.print(s + "\t");
                 }
                 System.out.println();
             }

@@ -2,6 +2,7 @@ package edu.hitsz.application;
 
 import edu.hitsz.DAO.ScoreDao;
 import edu.hitsz.DAO.ScoreDaoImpl;
+import edu.hitsz.DAO.ScoreInfo;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
@@ -16,6 +17,7 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
@@ -168,12 +170,21 @@ public class Game extends JPanel {
             if (heroAircraft.getHp() <= 0) {
                 // 游戏结束
                 System.out.println("Game Over!\n");
-                System.out.println("*************************************");
-                System.out.println("\t\t\t  得分排行榜  \t\t\t");
-                System.out.println("*************************************");
+
+                Date date = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd\tHH:mm");
+
+                ScoreInfo scoreInfo = new ScoreInfo();
+                scoreInfo.setScore(score);
+                scoreInfo.setName("testUser");
+                scoreInfo.setDate(dateFormat.format(date));
+
+                System.out.println("************************************");
+                System.out.println("\t\t\t 得分排行榜  \t\t\t");
+                System.out.println("************************************");
                 scoreDao.addItem(score);
                 scoreDao.getAllItem();
-                System.out.println("*************************************");
+                System.out.println("************************************");
 
                 executorService.shutdown();
                 gameOverFlag = true;
