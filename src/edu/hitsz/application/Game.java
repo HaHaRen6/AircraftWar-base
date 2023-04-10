@@ -1,5 +1,7 @@
 package edu.hitsz.application;
 
+import edu.hitsz.DAO.ScoreDao;
+import edu.hitsz.DAO.ScoreDaoImpl;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
@@ -43,6 +45,7 @@ public class Game extends JPanel {
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
+    private ScoreDao scoreDao = new ScoreDaoImpl();
     private EnemyFactory enemyFactory;
 
     /**
@@ -164,9 +167,16 @@ public class Game extends JPanel {
             // 游戏结束检查英雄机是否存活
             if (heroAircraft.getHp() <= 0) {
                 // 游戏结束
+                System.out.println("Game Over!\n");
+                System.out.println("*************************************");
+                System.out.println("\t\t\t  得分排行榜  \t\t\t");
+                System.out.println("*************************************");
+                scoreDao.addItem(score);
+                scoreDao.getAllItem();
+                System.out.println("*************************************");
+
                 executorService.shutdown();
                 gameOverFlag = true;
-                System.out.println("Game Over!");
             }
         };
 

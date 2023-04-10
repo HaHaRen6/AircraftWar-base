@@ -30,7 +30,6 @@ public class DirectShootStrategy implements ShootStrategy {
             bullet = new HeroBullet(x, y, speedX, -11, power);
         } else {
             bullet = new EnemyBullet(x, y, speedX, speedY, power);
-            System.out.println("EneDic" + speedY);
         }
         res.add(bullet);
 
