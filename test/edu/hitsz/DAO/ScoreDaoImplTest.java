@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ScoreDaoImplTest {
     ScoreDaoImpl test = null;
     @BeforeEach
@@ -22,11 +20,14 @@ class ScoreDaoImplTest {
 
     @Test
     void addItem() throws IOException {
-        test.addItem(1);
+//        test.addItem(1);
     }
 
     @Test
     void getAllItem() {
-        test.getAllItem();
+        test.getAllItems();
+        System.out.println("------------------------");
+        test.sortByScore();
+        test.getAllItems();
     }
 }

@@ -1,5 +1,8 @@
 package edu.hitsz.DAO;
 
+/**
+ * @author hhr
+ */
 public class ScoreInfo {
     private int score;
     private String name;

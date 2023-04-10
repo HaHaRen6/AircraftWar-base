@@ -16,9 +16,8 @@ import java.util.List;
 public class ScoreDaoImpl implements ScoreDao {
     private List<ScoreInfo> scoreInfos;
 
-    public ScoreDaoImpl(){
+    public ScoreDaoImpl() {
         scoreInfos = new ArrayList<>();
-
     }
 
     public void addItem(int score) {
@@ -58,45 +57,25 @@ public class ScoreDaoImpl implements ScoreDao {
         }
     }
 
-    public void getAllItem() {
+    public void getAllItems() {
         File scoreFile = new File("score/score.txt");
-
         BufferedReader reader = null;
         FileReader fileReader = null;
-        ArrayList<String> items = new ArrayList<>();
-        String[][] data = new String[1000][4];
-        int cnt;
-        cnt = 0;
 
         try {
             fileReader = new FileReader(scoreFile);
             reader = new BufferedReader(fileReader);
             String line = "";
             while ((line = reader.readLine()) != null) {
-                // 将所有记录添加到items中
-                items.add(line);
+                // 按 \t 分割
                 String[] parts = line.split("\t");
 
-                data[cnt] = parts;
-                int i = cnt;
-                while (i > 0 && Integer.parseInt(data[i][0]) > Integer.parseInt(data[i - 1][0])) {
-                    parts = data[i];
-                    data[i] = data[i - 1];
-                    data[i - 1] = parts;
-                    i--;
-                }
-                cnt++;
+                ScoreInfo temp = new ScoreInfo();
+                temp.setScore(Integer.parseInt(parts[0]));
+                temp.setName(parts[1]);
+                temp.setDate(parts[2]);
+                scoreInfos.add(temp);
             }
-
-            // 打印排序好的记录
-            for (int i = 0; i < cnt; i++) {
-                System.out.print("第" + (i + 1) + "名\t");
-                for (String s : data[i]) {
-                    System.out.print(s + "\t");
-                }
-                System.out.println();
-            }
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
@@ -110,8 +89,20 @@ public class ScoreDaoImpl implements ScoreDao {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
         }
     }
 
+
+    public void sortByScore() {
+        Collections.sort(scoreInfos, (b, a) -> {
+            return a.getScore() - b.getScore();
+        });
+    }
+
+    public void outPutItems() {
+        int i = 1;
+        for (ScoreInfo s : scoreInfos) {
+            System.out.println("第" + i++ + "名\t" + s.getScore() + "\t" + s.getName() + "\t" + s.getDate());
+        }
+    }
 }

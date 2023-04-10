@@ -11,7 +11,6 @@ import edu.hitsz.factory.EliteEnemyFactory;
 import edu.hitsz.factory.EnemyFactory;
 import edu.hitsz.factory.MobEnemyFactory;
 import edu.hitsz.prop.AbstractProp;
-import edu.hitsz.shootStrategy.DirectShootStrategy;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import javax.swing.*;
@@ -179,12 +178,14 @@ public class Game extends JPanel {
                 scoreInfo.setName("testUser");
                 scoreInfo.setDate(dateFormat.format(date));
 
-                System.out.println("************************************");
+                System.out.println("***********************************");
                 System.out.println("\t\t\t 得分排行榜  \t\t\t");
-                System.out.println("************************************");
+                System.out.println("***********************************");
                 scoreDao.addItem(score);
-                scoreDao.getAllItem();
-                System.out.println("************************************");
+                scoreDao.getAllItems();
+                scoreDao.sortByScore();
+                scoreDao.outPutItems();
+                System.out.println("***********************************");
 
                 executorService.shutdown();
                 gameOverFlag = true;

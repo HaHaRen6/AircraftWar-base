@@ -3,15 +3,35 @@
 
 interface ScoreDao{
     + {abstract} addItem(int score):void
-    + {abstract} getAllItem():void
+    + {abstract} getAllItems():void
+    + {abstract} sortByScore():void
+    + {abstract} outPutItems():void
 }
+ScoreDao <.. Game
 
 class ScoreDaoImpl{
     + addItem(int score):void
-    + getAllItem():void
+    + getAllItems():void
+    + sortByScore():void
+    + outPutItems():void
 }
 ScoreDao <|..ScoreDaoImpl
 
+class ScoreInfo{
+    - score:int
+    - name:String
+    - date:String
 
+    + getScore():int
+    + setScore(int score):void
+    + getName():String
+    + setName(String name):void
+    + getDate():String
+    + setDate(String name):void
+}
+ScoreInfo <-- ScoreDaoImpl
+
+class Game{
+}
 
 @enduml
