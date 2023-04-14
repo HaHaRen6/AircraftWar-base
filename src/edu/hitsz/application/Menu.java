@@ -12,6 +12,7 @@ public class Menu {
     private JButton HardModeButton;
     private JComboBox IfMusic;
     private JLabel MusicLabel;
+    private static JFrame frame;
 
     public static final int WINDOW_WIDTH = 512;
     public static final int WINDOW_HEIGHT = 768;
@@ -22,6 +23,7 @@ public class Menu {
             public void actionPerformed(ActionEvent e) {
                 String[] mode = {"easy"};
                 Main.main(mode);
+                frame.setVisible(false);
             }
         });
         MediumModeButton.addActionListener(new ActionListener() {
@@ -29,6 +31,7 @@ public class Menu {
             public void actionPerformed(ActionEvent e) {
                 String[] mode = {"medium"};
                 Main.main(mode);
+                frame.setVisible(false);
             }
         });
         HardModeButton.addActionListener(new ActionListener() {
@@ -36,6 +39,7 @@ public class Menu {
             public void actionPerformed(ActionEvent e) {
                 String[] mode = {"hard"};
                 Main.main(mode);
+                frame.setVisible(false);
             }
         });
     }
@@ -43,7 +47,7 @@ public class Menu {
     public static void main(String[] args) {
         // 获得屏幕的分辨率，初始化 Frame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        JFrame frame = new JFrame("Menu");
+        frame = new JFrame("Menu");
         frame.setContentPane(new Menu().MenuPanel);
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setResizable(false);
@@ -51,8 +55,7 @@ public class Menu {
         frame.setBounds(((int) screenSize.getWidth() - WINDOW_WIDTH) / 2, 0,
                 WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
+        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 }
