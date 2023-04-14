@@ -2,6 +2,7 @@ package edu.hitsz.application;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * 程序入口
@@ -28,9 +29,20 @@ public class Main {
                 WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Game game = new Game();
+        Game game = null;
+        if (Objects.equals(args[0], "easy")) {
+            game = new EasyGame();
+        }
+        else if (Objects.equals(args[0], "medium")) {
+            game = new MediumGame();
+        }
+        else if (Objects.equals(args[0], "hard")) {
+            game = new HardGame();
+        }
         frame.add(game);
         frame.setVisible(true);
+        assert game != null;
         game.action();
+
     }
 }

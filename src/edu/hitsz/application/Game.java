@@ -350,6 +350,10 @@ public class Game extends JPanel {
     //      Paint 各部分
     //***********************
 
+    protected Image getBackGround() {
+        return ImageManager.BACKGROUND_IMAGE1;
+    }
+
     /**
      * 重写paint方法
      * 通过重复调用paint方法，实现游戏动画
@@ -361,8 +365,8 @@ public class Game extends JPanel {
         super.paint(g);
 
         // 绘制背景,图片滚动
-        g.drawImage(ImageManager.BACKGROUND_IMAGE, 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
-        g.drawImage(ImageManager.BACKGROUND_IMAGE, 0, this.backGroundTop, null);
+        g.drawImage(getBackGround(), 0, this.backGroundTop - Main.WINDOW_HEIGHT, null);
+        g.drawImage(getBackGround(), 0, this.backGroundTop, null);
         this.backGroundTop += 1;
         if (this.backGroundTop == Main.WINDOW_HEIGHT) {
             this.backGroundTop = 0;
