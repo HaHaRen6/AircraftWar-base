@@ -46,6 +46,7 @@ public class Game extends JPanel {
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
+    private ScoreTable scoreTable;
 
     /**
      * 【数据访问对象模式】数据对象
@@ -180,22 +181,23 @@ public class Game extends JPanel {
 
                 // 以设定格式获取当前时间
                 Date date = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
 
-
+                // 产生本次成绩
                 ScoreInfo scoreInfo = new ScoreInfo();
                 scoreInfo.setScore(score);
                 scoreInfo.setName("testUser");
                 scoreInfo.setDate(dateFormat.format(date));
-                scoreDao.addItem(scoreInfo);
 
-                System.out.println("***********************************");
-                System.out.println("\t\t\t 得分排行榜  \t\t\t");
-                System.out.println("***********************************");
+                // 成绩处理
+                scoreDao.addItem(scoreInfo);
                 scoreDao.getAllItems();
                 scoreDao.sortByScore();
-                scoreDao.outPutItems();
-                System.out.println("***********************************");
+
+                // 成绩表
+                scoreTable = new ScoreTable(scoreDao);
+                Main.cardPanel.add(scoreTable.getMainPanel());
+                Main.cardLayout.last(Main.cardPanel);
 
                 executorService.shutdown();
                 gameOverFlag = true;

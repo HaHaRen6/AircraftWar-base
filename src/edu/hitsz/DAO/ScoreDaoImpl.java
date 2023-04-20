@@ -1,11 +1,10 @@
 package edu.hitsz.DAO;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 【数据访问对象模式】DAO实现类
@@ -92,15 +91,61 @@ public class ScoreDaoImpl implements ScoreDao {
 
 
     public void sortByScore() {
-        Collections.sort(scoreInfos, (b, a) -> {
+        scoreInfos.sort((b, a) -> {
             return a.getScore() - b.getScore();
         });
     }
 
-    public void outPutItems() {
-        int i = 1;
+    public String[][] outPutItems() {
+        int cnt = 0;
+        String[][] str = new String[scoreInfos.size() + 1][4];
         for (ScoreInfo s : scoreInfos) {
-            System.out.println("第" + i++ + "名\t" + s.getScore() + "\t" + s.getName() + "\t" + s.getDate());
+            str[cnt][0] = String.valueOf(cnt + 1);
+            str[cnt][1] = String.valueOf(s.getScore());
+            str[cnt][2] = s.getName();
+            str[cnt][3] = s.getDate();
+            cnt++;
+        }
+        return str;
+    }
+
+    public void deleteByTime(String[][] str) {
+        File scoreFile = new File("score/score.txt");
+        OutputStream fOut = null;
+        OutputStreamWriter writer = null;
+
+        try {
+            // 构建FileOutputStream对象,文件不存在会自动新建
+            fOut = new FileOutputStream(scoreFile);
+
+            // 构建OutputStreamWriter对象,参数可以指定编码,默认为操作系统默认编码
+            writer = new OutputStreamWriter(fOut, StandardCharsets.UTF_8);
+
+            for (int i = 0; i < str.length - 1; i++) {
+                if (!Objects.equals(str[i][3], "delete")) {
+                    for (int j = 1; j < str[i].length; j++) {
+                        writer.append(str[i][j]).append("\t");
+                    }
+                    writer.append("\n");
+                }
+            }
+
+            // 刷新缓冲区（不知道有没有用）
+            writer.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                //关闭写入流,同时会把缓冲区内容写入文件
+                assert writer != null;
+                writer.close();
+
+                //关闭输出流,释放系统资源
+                assert fOut != null;
+                fOut.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

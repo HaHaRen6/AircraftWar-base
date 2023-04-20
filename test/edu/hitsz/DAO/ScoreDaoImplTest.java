@@ -1,5 +1,6 @@
 package edu.hitsz.DAO;
 
+import edu.hitsz.application.ScoreTable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,15 +8,18 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
 class ScoreDaoImplTest {
-    ScoreDaoImpl test = null;
+    ScoreDao test = null;
+    ScoreTable scoreTable=null;
     @BeforeEach
     void setUp() {
         test = new ScoreDaoImpl();
+        scoreTable = new ScoreTable(test.outPutItems());
     }
 
     @AfterEach
     void tearDown() {
         test = null;
+        scoreTable = null;
     }
 
     @Test
@@ -28,6 +32,8 @@ class ScoreDaoImplTest {
         test.getAllItems();
         System.out.println("------------------------");
         test.sortByScore();
-        test.getAllItems();
+//        scoreTable.setTableData(test.outPutItems());
+
+        System.out.println("!23");
     }
 }

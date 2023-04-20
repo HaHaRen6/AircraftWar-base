@@ -26,6 +26,8 @@ public interface ScoreDao {
     /**
      * 打印分数
      */
-    void outPutItems();
+    String[][] outPutItems();
+
+    void deleteByTime(String[][] str);
 
 }
