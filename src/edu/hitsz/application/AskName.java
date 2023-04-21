@@ -20,14 +20,14 @@ public class AskName {
             @Override
             public void actionPerformed(ActionEvent e) {
                 scoreInfo.setName(textField.getText());
-                scoreDao.addItem(scoreInfo,scoreFile);
+                scoreDao.addItem(scoreInfo, scoreFile);
                 scoreDao.getAllItems(scoreFile);
                 scoreDao.sortByScore();
 
                 // 成绩表
-                ScoreTable scoreTable = new ScoreTable(scoreDao,scoreFile);
+                ScoreTable scoreTable = new ScoreTable(scoreDao, scoreFile);
                 Main.cardPanel.add(scoreTable.getMainPanel());
-                Main.frame.setSize(512,768);
+                Main.frame.setSize(512, 768);
                 Main.cardLayout.last(Main.cardPanel);
             }
         });

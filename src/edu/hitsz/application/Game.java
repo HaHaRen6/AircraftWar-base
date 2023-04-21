@@ -192,7 +192,7 @@ public abstract class Game extends JPanel {
                 if (backGroundMusic != null) {
                     backGroundMusic.stopMusic();
                 }
-                if (bossMusic!=null) {
+                if (bossMusic != null) {
                     bossMusic.stopMusic();
                 }
                 MusicThread m = new MusicThread("src/videos/game_over.wav");

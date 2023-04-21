@@ -10,7 +10,7 @@ import java.util.Objects;
  * @author hitsz
  */
 public class Main {
-    static final CardLayout cardLayout = new CardLayout(0,0);
+    static final CardLayout cardLayout = new CardLayout(0, 0);
     static final JPanel cardPanel = new JPanel(cardLayout);
     public static JFrame frame;
     public static boolean GameMusic;
