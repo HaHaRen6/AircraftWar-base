@@ -27,11 +27,20 @@ public class ScoreTable {
     public static final int WINDOW_HEIGHT = 768;
 
 
-    public ScoreTable(ScoreDao scoreDao, File scoreFile) {
+    public ScoreTable(ScoreDao scoreDao, File scoreFile, Game game) {
 
         String[] columnName = {"名次", "成绩", "姓名", "时间"};
         String[][] tableData = scoreDao.outPutItems();
 
+        if (game instanceof EasyGame) {
+            headerLabel.setText("成绩表（简单难度）");
+        } else {
+            if (game instanceof MediumGame) {
+                headerLabel.setText("成绩表（中等难度）");
+            } else {
+                headerLabel.setText("成绩表（困难难度）");
+            }
+        }
 
         //表格模型
         DefaultTableModel model = new DefaultTableModel(tableData, columnName) {

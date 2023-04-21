@@ -15,7 +15,7 @@ public class AskName {
     private JLabel Label;
     private String name;
 
-    public AskName(ScoreInfo scoreInfo, ScoreDao scoreDao, File scoreFile) {
+    public AskName(ScoreInfo scoreInfo, ScoreDao scoreDao, File scoreFile, Game game) {
         enterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -25,7 +25,7 @@ public class AskName {
                 scoreDao.sortByScore();
 
                 // 成绩表
-                ScoreTable scoreTable = new ScoreTable(scoreDao, scoreFile);
+                ScoreTable scoreTable = new ScoreTable(scoreDao, scoreFile, game);
                 Main.cardPanel.add(scoreTable.getMainPanel());
                 Main.frame.setSize(512, 768);
                 Main.cardLayout.last(Main.cardPanel);

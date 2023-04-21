@@ -209,7 +209,7 @@ public abstract class Game extends JPanel {
                 System.out.println("Your score: " + score);
 
                 // 成绩处理
-                AskName askName = new AskName(scoreInfo, scoreDao, getScoreFile());
+                AskName askName = new AskName(scoreInfo, scoreDao, getScoreFile(), this);
                 Main.cardPanel.add(askName.getMainPanel());
                 Main.frame.setSize(200, 200);
                 Main.cardLayout.last(Main.cardPanel);
