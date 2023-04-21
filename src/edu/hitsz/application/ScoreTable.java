@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * @author hhr
@@ -26,7 +27,7 @@ public class ScoreTable {
     public static final int WINDOW_HEIGHT = 768;
 
 
-    public ScoreTable(ScoreDao scoreDao) {
+    public ScoreTable(ScoreDao scoreDao, File scoreFile) {
 
         String[] columnName = {"名次", "成绩", "姓名", "时间"};
         String[][] tableData = scoreDao.outPutItems();
@@ -50,14 +51,14 @@ public class ScoreTable {
             public void actionPerformed(ActionEvent e) {
 
                 int row = scoreTable.getSelectedRow();
-                System.out.println("delete row:" + row);
+                System.out.println("delete row:" + (row + 1));
                 int result = JOptionPane.showConfirmDialog(deleteButton,
                         "是否确定中删除？");
                 if (JOptionPane.YES_OPTION == result && row != -1) {
                     model.removeRow(row);
                     tableData[row + cnt][3] = "delete";
                     cnt++;
-                    scoreDao.deleteByTime(tableData);
+                    scoreDao.deleteByTime(tableData, scoreFile);
                 }
             }
         });

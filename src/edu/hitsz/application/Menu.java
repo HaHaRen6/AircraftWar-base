@@ -20,6 +20,7 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Game game = new EasyGame();
+                MusicThread.gameMusic = music.isSelected();
                 Main.cardPanel.add(game);
                 game.action();
                 Main.cardLayout.last(Main.cardPanel);
@@ -29,6 +30,7 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Game game = new MediumGame();
+                MusicThread.gameMusic = music.isSelected();
                 Main.cardPanel.add(game);
                 game.action();
                 Main.cardLayout.last(Main.cardPanel);
@@ -38,11 +40,13 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Game game = new HardGame();
+                MusicThread.gameMusic = music.isSelected();
                 Main.cardPanel.add(game);
                 game.action();
                 Main.cardLayout.last(Main.cardPanel);
             }
         });
+
     }
 
     public JPanel getMainPanel() {

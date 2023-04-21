@@ -18,9 +18,7 @@ public class ScoreDaoImpl implements ScoreDao {
         scoreInfos = new ArrayList<>();
     }
 
-    public void addItem(ScoreInfo scoreInfo) {
-
-        File scoreFile = new File("score/score.txt");
+    public void addItem(ScoreInfo scoreInfo, File scoreFile) {
         OutputStream fOut = null;
         OutputStreamWriter writer = null;
 
@@ -53,8 +51,7 @@ public class ScoreDaoImpl implements ScoreDao {
         }
     }
 
-    public void getAllItems() {
-        File scoreFile = new File("score/score.txt");
+    public void getAllItems(File scoreFile) {
         BufferedReader reader = null;
         FileReader fileReader = null;
 
@@ -109,8 +106,7 @@ public class ScoreDaoImpl implements ScoreDao {
         return str;
     }
 
-    public void deleteByTime(String[][] str) {
-        File scoreFile = new File("score/score.txt");
+    public void deleteByTime(String[][] str, File scoreFile) {
         OutputStream fOut = null;
         OutputStreamWriter writer = null;
 

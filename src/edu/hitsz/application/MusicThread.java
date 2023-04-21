@@ -18,10 +18,14 @@ import javax.sound.sampled.DataLine.Info;
 public class MusicThread extends Thread {
 
 
+    public static boolean gameMusic;
     //音频文件名
     private String filename;
     private AudioFormat audioFormat;
     private byte[] samples;
+    private SourceDataLine dataLine;
+    private boolean loop = false;
+    private boolean stop = false;
 
     public MusicThread(String filename) {
         //初始化filename
@@ -62,7 +66,7 @@ public class MusicThread extends Thread {
         int size = (int) (audioFormat.getFrameSize() * audioFormat.getSampleRate());
         byte[] buffer = new byte[size];
         //源数据行SoureDataLine是可以写入数据的数据行
-        SourceDataLine dataLine = null;
+        dataLine = null;
         //获取受数据行支持的音频格式DataLine.info
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
         try {
@@ -75,7 +79,7 @@ public class MusicThread extends Thread {
         dataLine.start();
         try {
             int numBytesRead = 0;
-            while (numBytesRead != -1) {
+            do {
                 //从音频流读取指定的最大数量的数据字节，并将其放入缓冲区中
                 numBytesRead =
                         source.read(buffer, 0, buffer.length);
@@ -83,7 +87,18 @@ public class MusicThread extends Thread {
                 if (numBytesRead != -1) {
                     dataLine.write(buffer, 0, numBytesRead);
                 }
-            }
+                if (numBytesRead == -1 && loop) {
+                    ((ByteArrayInputStream) source).reset();
+                }
+                if (stop) {
+                    if (dataLine != null) {
+                        dataLine.stop();
+                        dataLine.flush();
+                        dataLine.close();
+                    }
+                    break;
+                }
+            } while (loop);
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -91,13 +106,23 @@ public class MusicThread extends Thread {
 
         dataLine.drain();
         dataLine.close();
-
     }
 
     @Override
     public void run() {
-        InputStream stream = new ByteArrayInputStream(samples);
-        play(stream);
+        if (gameMusic) {
+            InputStream stream = new ByteArrayInputStream(samples);
+            play(stream);
+        }
+    }
+
+    public void stopMusic() {
+        loop = false;
+        stop = true;
+    }
+
+    public void setLoop(boolean loop) {
+        this.loop = loop;
     }
 }
 

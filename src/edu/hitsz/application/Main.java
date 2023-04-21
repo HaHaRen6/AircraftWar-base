@@ -12,6 +12,8 @@ import java.util.Objects;
 public class Main {
     static final CardLayout cardLayout = new CardLayout(0,0);
     static final JPanel cardPanel = new JPanel(cardLayout);
+    public static JFrame frame;
+    public static boolean GameMusic;
 
     public static final int WINDOW_WIDTH = 512;
     public static final int WINDOW_HEIGHT = 768;
@@ -19,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
         // 获得屏幕的分辨率，初始化 Frame
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        JFrame frame = new JFrame("CardLayout");
+        frame = new JFrame("AircraftWar");
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setResizable(false);
         //设置窗口的大小和位置,居中放置

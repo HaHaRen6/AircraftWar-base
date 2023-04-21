@@ -16,6 +16,7 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.Random;
  *
  * @author hitsz
  */
-public class Game extends JPanel {
+public abstract class Game extends JPanel {
 
     private int backGroundTop = 0;
 
@@ -46,8 +47,8 @@ public class Game extends JPanel {
     private final List<BaseBullet> heroBullets;
     private final List<BaseBullet> enemyBullets;
     private final List<AbstractProp> props;
-    private ScoreTable scoreTable;
-
+    private MusicThread backGroundMusic;
+    private MusicThread bossMusic;
     /**
      * 【数据访问对象模式】数据对象
      */
@@ -117,6 +118,10 @@ public class Game extends JPanel {
      * 游戏启动入口，执行游戏逻辑
      */
     public void action() {
+        // 背景音乐
+        backGroundMusic = new MusicThread("src/videos/bgm.wav");
+        backGroundMusic.start();
+        backGroundMusic.setLoop(true);
 
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
@@ -135,6 +140,12 @@ public class Game extends JPanel {
                  */
                 if (addBoss) {
                     // 产生Boss机
+                    backGroundMusic.setLoop(false);
+                    backGroundMusic.stopMusic();
+                    bossMusic = new MusicThread("src/videos/bgm_boss.wav");
+                    bossMusic.start();
+                    bossMusic.setLoop(true);
+
                     enemyFactory = new BossEnemyFactory();
                     enemyAircrafts.add(enemyFactory.createEnemy());
                     addBoss = false;
@@ -178,6 +189,14 @@ public class Game extends JPanel {
             if (heroAircraft.getHp() <= 0) {
                 // 游戏结束
                 System.out.println("Game Over!\n");
+                if (backGroundMusic != null) {
+                    backGroundMusic.stopMusic();
+                }
+                if (bossMusic!=null) {
+                    bossMusic.stopMusic();
+                }
+                MusicThread m = new MusicThread("src/videos/game_over.wav");
+                m.start();
 
                 // 以设定格式获取当前时间
                 Date date = new Date();
@@ -186,23 +205,13 @@ public class Game extends JPanel {
                 // 产生本次成绩
                 ScoreInfo scoreInfo = new ScoreInfo();
                 scoreInfo.setScore(score);
-                scoreInfo.setName("testUser");
                 scoreInfo.setDate(dateFormat.format(date));
                 System.out.println("Your score: " + score);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
 
                 // 成绩处理
-                scoreDao.addItem(scoreInfo);
-                scoreDao.getAllItems();
-                scoreDao.sortByScore();
-
-                // 成绩表
-                scoreTable = new ScoreTable(scoreDao);
-                Main.cardPanel.add(scoreTable.getMainPanel());
+                AskName askName = new AskName(scoreInfo, scoreDao, getScoreFile());
+                Main.cardPanel.add(askName.getMainPanel());
+                Main.frame.setSize(200, 200);
                 Main.cardLayout.last(Main.cardPanel);
 
                 executorService.shutdown();
@@ -263,6 +272,8 @@ public class Game extends JPanel {
         }
     }
 
+    protected abstract File getScoreFile();
+
     /**
      * 碰撞检测：
      * 1. 敌机攻击英雄
@@ -299,6 +310,10 @@ public class Game extends JPanel {
                 }
 
                 if (enemyAircraft.crash(bullet)) {
+                    // 播放音乐
+                    MusicThread m = new MusicThread("src/videos/bullet_hit.wav");
+                    m.start();
+
                     // 敌机撞击到英雄机子弹，敌机损失一定生命值
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
@@ -310,6 +325,13 @@ public class Game extends JPanel {
                             addBoss = true;
                         }
                         if (enemyAircraft instanceof BossEnemy) {
+                            bossMusic.setLoop(false);
+                            bossMusic.stopMusic();
+                            backGroundMusic = new MusicThread("src/videos/bgm.wav");
+                            backGroundMusic.start();
+                            System.out.println("21");
+                            backGroundMusic.setLoop(true);
+                            System.out.println("1");
                             props.addAll(((BossEnemy) enemyAircraft).dropProp());
                         }
                         if (enemyAircraft instanceof EliteEnemy) {
@@ -358,9 +380,7 @@ public class Game extends JPanel {
     //      Paint 各部分
     //***********************
 
-    protected Image getBackGround() {
-        return ImageManager.BACKGROUND_IMAGE1;
-    }
+    protected abstract Image getBackGround();
 
     /**
      * 重写paint方法

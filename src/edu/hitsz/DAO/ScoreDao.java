@@ -1,5 +1,7 @@
 package edu.hitsz.DAO;
 
+import java.io.File;
+
 /**
  * 【数据访问对象模式】DAO接口
  *
@@ -11,12 +13,12 @@ public interface ScoreDao {
      *
      * @param scoreInfo 数据对象
      */
-    void addItem(ScoreInfo scoreInfo);
+    void addItem(ScoreInfo scoreInfo, File scoreFile);
 
     /**
      * 从txt文件获取对象
      */
-    void getAllItems();
+    void getAllItems(File scoreFile);
 
     /**
      * 排序分数
@@ -28,6 +30,6 @@ public interface ScoreDao {
      */
     String[][] outPutItems();
 
-    void deleteByTime(String[][] str);
+    void deleteByTime(String[][] str, File scoreFile);
 
 }

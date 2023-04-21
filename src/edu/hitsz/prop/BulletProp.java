@@ -1,6 +1,7 @@
 package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
+import edu.hitsz.application.MusicThread;
 import edu.hitsz.shootStrategy.DirectShootStrategy;
 import edu.hitsz.shootStrategy.ScatterShootStrategy;
 
@@ -17,6 +18,8 @@ public class BulletProp extends AbstractProp {
 
     @Override
     public void active(HeroAircraft heroAircraft) {
+        MusicThread m = new MusicThread("src/videos/get_supply.wav");
+        m.start();
         Runnable r = () -> {
             try {
                 for (int i = 0; i < 10; i++) {
