@@ -181,13 +181,19 @@ public class Game extends JPanel {
 
                 // 以设定格式获取当前时间
                 Date date = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
 
                 // 产生本次成绩
                 ScoreInfo scoreInfo = new ScoreInfo();
                 scoreInfo.setScore(score);
                 scoreInfo.setName("testUser");
                 scoreInfo.setDate(dateFormat.format(date));
+                System.out.println("Your score: " + score);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
 
                 // 成绩处理
                 scoreDao.addItem(scoreInfo);

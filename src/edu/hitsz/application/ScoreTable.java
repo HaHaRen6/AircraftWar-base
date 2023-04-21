@@ -20,6 +20,7 @@ public class ScoreTable {
     private JButton deleteButton;
     private JButton closeButton;
     private JTable scoreTable;
+    private int cnt = 0;
 
     public static final int WINDOW_WIDTH = 512;
     public static final int WINDOW_HEIGHT = 768;
@@ -28,7 +29,8 @@ public class ScoreTable {
     public ScoreTable(ScoreDao scoreDao) {
 
         String[] columnName = {"名次", "成绩", "姓名", "时间"};
-        String[][] tableData= scoreDao.outPutItems();
+        String[][] tableData = scoreDao.outPutItems();
+
 
         //表格模型
         DefaultTableModel model = new DefaultTableModel(tableData, columnName) {
@@ -48,12 +50,13 @@ public class ScoreTable {
             public void actionPerformed(ActionEvent e) {
 
                 int row = scoreTable.getSelectedRow();
-                System.out.println(row);
+                System.out.println("delete row:" + row);
                 int result = JOptionPane.showConfirmDialog(deleteButton,
                         "是否确定中删除？");
                 if (JOptionPane.YES_OPTION == result && row != -1) {
                     model.removeRow(row);
-                    tableData[row][3] = "delete";
+                    tableData[row + cnt][3] = "delete";
+                    cnt++;
                     scoreDao.deleteByTime(tableData);
                 }
             }
