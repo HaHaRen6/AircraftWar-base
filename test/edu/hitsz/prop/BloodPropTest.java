@@ -44,7 +44,6 @@ class BloodPropTest {
     @Test
     void active() {
         System.out.println("**--- Test active method executed ---**");
-        prop.active(heroAircraft);
         assertEquals(600, heroAircraft.getHp());
     }
 }

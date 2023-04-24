@@ -98,4 +98,13 @@ public class BossEnemy extends AbstractAircraft implements Enemy {
         }
         return propRes;
     }
+
+    @Override
+    public void update() {
+        if (hp <= 100) {
+            vanish();
+        } else {
+            hp -= 100;
+        }
+    }
 }

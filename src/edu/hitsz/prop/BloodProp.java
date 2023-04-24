@@ -2,6 +2,7 @@ package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.MusicThread;
+import edu.hitsz.application.Publisher;
 
 /**
  * 回血道具
@@ -17,7 +18,7 @@ public class BloodProp extends AbstractProp {
     }
 
     @Override
-    public void active(HeroAircraft heroAircraft) {
+    public void active(HeroAircraft heroAircraft, Publisher publisher) {
         MusicThread m = new MusicThread("src/videos/get_supply.wav");
         m.start();
         heroAircraft.increaseHp(hpIncrease);

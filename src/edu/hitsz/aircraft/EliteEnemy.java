@@ -1,5 +1,6 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.application.Game;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.factory.BloodPropFactory;
@@ -44,15 +45,6 @@ public class EliteEnemy extends AbstractAircraft implements Enemy {
     }
 
     @Override
-    public void forward() {
-        super.forward();
-        // 判定 y 轴向下飞行出界
-        if (locationY >= Main.WINDOW_HEIGHT) {
-            vanish();
-        }
-    }
-
-    @Override
     /**
      * 通过射击产生子弹
      *
@@ -90,5 +82,10 @@ public class EliteEnemy extends AbstractAircraft implements Enemy {
             propRes.add(propFactory.createProp(x, y, speedY));
         }
         return propRes;
+    }
+
+    @Override
+    public void update() {
+        vanish();
     }
 }

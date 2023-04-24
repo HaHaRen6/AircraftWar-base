@@ -2,6 +2,7 @@ package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.MusicThread;
+import edu.hitsz.application.Publisher;
 
 /**
  * 火力道具
@@ -15,9 +16,9 @@ public class BombProp extends AbstractProp {
     }
 
     @Override
-    public void active(HeroAircraft heroAircraft) {
+    public void active(HeroAircraft heroAircraft,Publisher publisher) {
         MusicThread m = new MusicThread("src/videos/bomb_explosion.wav");
         m.start();
-        System.out.println("BombSupply active!");
+        publisher.bombActive();
     }
 }

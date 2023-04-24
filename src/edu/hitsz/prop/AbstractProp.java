@@ -2,6 +2,7 @@ package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.Main;
+import edu.hitsz.application.Publisher;
 import edu.hitsz.basic.AbstractFlyingObject;
 
 /**
@@ -39,5 +40,5 @@ public abstract class AbstractProp extends AbstractFlyingObject {
      * <p>
      * 道具起作用
      */
-    public abstract void active(HeroAircraft heroAircraft);
+    public abstract void active(HeroAircraft heroAircraft, Publisher publisher);
 }

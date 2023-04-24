@@ -1,6 +1,7 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Main;
+import edu.hitsz.application.Publisher;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.AbstractProp;
 import edu.hitsz.shootStrategy.ShootStrategy;
@@ -20,14 +21,6 @@ public class MobEnemy extends AbstractAircraft implements Enemy {
         super(locationX, locationY, speedX, speedY, hp);
     }
 
-    @Override
-    public void forward() {
-        super.forward();
-        // 判定 y 轴向下飞行出界
-        if (locationY >= Main.WINDOW_HEIGHT) {
-            vanish();
-        }
-    }
 
     @Override
     public List<BaseBullet> shoot() {
@@ -39,4 +32,8 @@ public class MobEnemy extends AbstractAircraft implements Enemy {
         return new LinkedList<>();
     }
 
+    @Override
+    public void update() {
+        vanish();
+    }
 }

@@ -55,6 +55,11 @@ public abstract class Game extends JPanel {
     private ScoreDao scoreDao = new ScoreDaoImpl();
 
     /**
+     * 【观察者模式】发布者
+     */
+    private Publisher publisher = new Publisher();
+
+    /**
      * 【工厂模式】敌机工厂
      */
     private EnemyFactory enemyFactory;
@@ -147,19 +152,25 @@ public abstract class Game extends JPanel {
                     bossMusic.setLoop(true);
 
                     enemyFactory = new BossEnemyFactory();
-                    enemyAircrafts.add(enemyFactory.createEnemy());
+                    AbstractAircraft newEnemy = enemyFactory.createEnemy();
+                    enemyAircrafts.add(newEnemy);
+                    publisher.addEnemy((Enemy) newEnemy);
                     addBoss = false;
                 } else if (randEnemy.nextInt(100) < 15) {
                     // 产生精英敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         enemyFactory = new EliteEnemyFactory();
-                        enemyAircrafts.add(enemyFactory.createEnemy());
+                        AbstractAircraft newEnemy = enemyFactory.createEnemy();
+                        enemyAircrafts.add(newEnemy);
+                        publisher.addEnemy((Enemy) newEnemy);
                     }
                 } else {
                     // 产生普通敌机
                     if (enemyAircrafts.size() < enemyMaxNumber) {
                         enemyFactory = new MobEnemyFactory();
-                        enemyAircrafts.add(enemyFactory.createEnemy());
+                        AbstractAircraft newEnemy = enemyFactory.createEnemy();
+                        enemyAircrafts.add(newEnemy);
+                        publisher.addEnemy((Enemy) newEnemy);
                     }
                 }
 
@@ -272,7 +283,19 @@ public abstract class Game extends JPanel {
         }
     }
 
+    /**
+     * @return scoreFile 分数文件的地址
+     */
     protected abstract File getScoreFile();
+
+    private void outCheckAction() {
+        for (AbstractAircraft enemyAircraft : enemyAircrafts) {
+            if (enemyAircraft.getLocationY() >= Main.WINDOW_HEIGHT) {
+                publisher.removeEnemy((Enemy) enemyAircraft);
+                enemyAircraft.vanish();
+            }
+        }
+    }
 
     /**
      * 碰撞检测：
@@ -318,26 +341,7 @@ public abstract class Game extends JPanel {
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
 
-                    if (enemyAircraft.notValid()) {
-                        // 获得分数，产生道具补给
-                        score += 10;
-                        if (score % bossScore == 0) {
-                            addBoss = true;
-                        }
-                        if (enemyAircraft instanceof BossEnemy) {
-                            bossMusic.setLoop(false);
-                            bossMusic.stopMusic();
-                            backGroundMusic = new MusicThread("src/videos/bgm.wav");
-                            backGroundMusic.start();
-                            System.out.println("21");
-                            backGroundMusic.setLoop(true);
-                            System.out.println("1");
-                            props.addAll(((BossEnemy) enemyAircraft).dropProp());
-                        }
-                        if (enemyAircraft instanceof EliteEnemy) {
-                            props.addAll(((EliteEnemy) enemyAircraft).dropProp());
-                        }
-                    }
+                    enemyCheckDeath(enemyAircraft);
                 }
                 // 英雄机 与 敌机 相撞，均损毁
                 if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
@@ -349,14 +353,35 @@ public abstract class Game extends JPanel {
 
         // 我方获得道具，道具生效
         for (AbstractProp prop : props) {
-            // 加血道具
             if (prop.notValid()) {
                 continue;
             }
             if (heroAircraft.crash(prop)) {
-                prop.active(heroAircraft);
+                prop.active(heroAircraft, publisher);
                 prop.vanish();
             }
+        }
+    }
+
+    public void enemyCheckDeath(AbstractAircraft enemyAircraft) {
+        if (enemyAircraft.notValid()) {
+            // 获得分数，获得道具补给
+            score += 10;
+            if (score % bossScore == 0) {
+                addBoss = true;
+            }
+            if (enemyAircraft instanceof BossEnemy) {
+                bossMusic.setLoop(false);
+                bossMusic.stopMusic();
+                backGroundMusic = new MusicThread("src/videos/bgm.wav");
+                backGroundMusic.start();
+                backGroundMusic.setLoop(true);
+                props.addAll(((BossEnemy) enemyAircraft).dropProp());
+            }
+            if (enemyAircraft instanceof EliteEnemy) {
+                props.addAll(((EliteEnemy) enemyAircraft).dropProp());
+            }
+            publisher.removeEnemy((Enemy) enemyAircraft);
         }
     }
 
