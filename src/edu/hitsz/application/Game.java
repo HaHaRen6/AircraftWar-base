@@ -11,7 +11,6 @@ import edu.hitsz.factory.EliteEnemyFactory;
 import edu.hitsz.factory.EnemyFactory;
 import edu.hitsz.factory.MobEnemyFactory;
 import edu.hitsz.prop.AbstractProp;
-import edu.hitsz.prop.BombProp;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import javax.swing.*;
@@ -91,7 +90,7 @@ public abstract class Game extends JPanel {
     /**
      * 产生Boss机的分数阈值
      */
-    private final int bossScore = 300;
+    private final int bossScore = 200;
 
     /**
      * 游戏结束标志0
@@ -148,16 +147,11 @@ public abstract class Game extends JPanel {
                  */
                 if (addBoss) {
                     // 产生Boss机
-                    backGroundMusic.setLoop(false);
-                    backGroundMusic.stopMusic();
                     bossMusic = new MusicThread("src/videos/bgm_boss.wav");
-                    bossMusic.start();
-                    bossMusic.setLoop(true);
-
-                    enemyFactory = new BossEnemyFactory();
-                    AbstractAircraft newEnemy = enemyFactory.createEnemy();
-                    enemyAircrafts.add(newEnemy);
-                    publisher.addSubscriber((Subscriber) newEnemy);
+                    AbstractAircraft newEnemy = createBoss(backGroundMusic, bossMusic, publisher);
+                    if (newEnemy != null) {
+                        enemyAircrafts.add(newEnemy);
+                    }
                     addBoss = false;
                 } else if (randEnemy.nextInt(100) < 15) {
                     // 产生精英敌机
@@ -294,6 +288,13 @@ public abstract class Game extends JPanel {
     }
 
     /**
+     * 产生boss
+     *
+     * @return boss
+     */
+    protected abstract AbstractAircraft createBoss(MusicThread backGroundMusic, MusicThread bossMusic, Publisher publisher);
+
+    /**
      * 获取分数文件
      *
      * @return scoreFile 分数文件的地址
@@ -374,6 +375,7 @@ public abstract class Game extends JPanel {
                     // 敌机撞击到英雄机子弹，敌机损失一定生命值
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
+                    System.out.println(enemyAircraft + " " + enemyAircraft.getHp());
 
                     enemyCheckDeath(enemyAircraft);
                 }
@@ -384,17 +386,16 @@ public abstract class Game extends JPanel {
                 }
             }
         }
-
         // 我方获得道具，道具生效
-        for (int i = 0; i< props.size();i++) {
-            AbstractProp prop= props.get(i);
+        // 不能改成 for-each
+        for (int i = 0; i < props.size(); i++) {
+            AbstractProp prop = props.get(i);
             if (prop.notValid()) {
                 continue;
             }
             if (heroAircraft.crash(prop)) {
                 prop.active(heroAircraft, publisher);
-                for(AbstractAircraft enemyAircraft:enemyAircrafts)
-                {
+                for (AbstractAircraft enemyAircraft : enemyAircrafts) {
                     enemyCheckDeath(enemyAircraft);
                 }
                 prop.vanish();
