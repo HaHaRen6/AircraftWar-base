@@ -1,7 +1,6 @@
 package edu.hitsz.aircraft;
 
-import edu.hitsz.application.Game;
-import edu.hitsz.application.Main;
+import edu.hitsz.application.Subscriber;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.factory.BloodPropFactory;
 import edu.hitsz.factory.BombPropFactory;
@@ -22,7 +21,7 @@ import java.util.Random;
  *
  * @author hhr
  */
-public class EliteEnemy extends AbstractAircraft implements Enemy {
+public class EliteEnemy extends AbstractAircraft implements Enemy, Subscriber {
     /**
      * 子弹伤害
      */
@@ -59,7 +58,7 @@ public class EliteEnemy extends AbstractAircraft implements Enemy {
      * 通过掉落产生道具
      * @return 掉落的道具List
      */
-    public List<AbstractProp> dropProp() {
+    public void dropProp(List<AbstractProp> props) {
         List<AbstractProp> propRes = new LinkedList<>();
         int x = this.getLocationX();
         int y = this.getLocationY() + direction * 2;
@@ -81,7 +80,7 @@ public class EliteEnemy extends AbstractAircraft implements Enemy {
         if (propFactory != null) {
             propRes.add(propFactory.createProp(x, y, speedY));
         }
-        return propRes;
+        props.addAll(propRes);
     }
 
     @Override

@@ -5,6 +5,8 @@ import edu.hitsz.application.Main;
 import edu.hitsz.application.Publisher;
 import edu.hitsz.basic.AbstractFlyingObject;
 
+import java.util.List;
+
 /**
  * 道具类。
  *

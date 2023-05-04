@@ -1,6 +1,7 @@
 package edu.hitsz.bullet;
 
 import edu.hitsz.application.Main;
+import edu.hitsz.application.Subscriber;
 import edu.hitsz.basic.AbstractFlyingObject;
 
 /**
@@ -9,7 +10,7 @@ import edu.hitsz.basic.AbstractFlyingObject;
  *
  * @author hitsz
  */
-public class BaseBullet extends AbstractFlyingObject {
+public abstract class BaseBullet extends AbstractFlyingObject implements Subscriber {
 
     private int power = 10;
 
@@ -21,23 +22,14 @@ public class BaseBullet extends AbstractFlyingObject {
     @Override
     public void forward() {
         super.forward();
-
-        // 判定 x 轴出界
-        if (locationX <= 0 || locationX >= Main.WINDOW_WIDTH) {
-            vanish();
-        }
-
-        // 判定 y 轴出界
-        if (speedY > 0 && locationY >= Main.WINDOW_HEIGHT) {
-            // 向下飞行出界
-            vanish();
-        } else if (locationY <= 0) {
-            // 向上飞行出界
-            vanish();
-        }
     }
 
     public int getPower() {
         return power;
     }
+
+    /**
+     * 【观察者模式】对炸弹爆炸的反应
+     */
+    public abstract void update();
 }

@@ -12,15 +12,9 @@ import java.util.List;
  * @author hhr
  */
 public interface Enemy {
-    /**
-     * 道具掉落方法
-     *
-     * @return 返回道具
-     */
-    List<AbstractProp> dropProp();
 
     /**
-     * 【观察者模式】对炸弹爆炸的反应
+     * @param props 子弹集合
      */
-    void update();
+    void dropProp(List<AbstractProp> props);
 }

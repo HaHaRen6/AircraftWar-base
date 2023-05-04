@@ -3,6 +3,7 @@ package edu.hitsz.prop;
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.MusicThread;
 import edu.hitsz.application.Publisher;
+import edu.hitsz.application.Subscriber;
 
 /**
  * 回血道具

@@ -11,6 +11,7 @@ import edu.hitsz.factory.EliteEnemyFactory;
 import edu.hitsz.factory.EnemyFactory;
 import edu.hitsz.factory.MobEnemyFactory;
 import edu.hitsz.prop.AbstractProp;
+import edu.hitsz.prop.BombProp;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import javax.swing.*;
@@ -24,6 +25,8 @@ import java.util.concurrent.*;
 import java.util.Random;
 
 /**
+ * 【模板模式】抽象类
+ * <p>
  * 游戏主面板，游戏启动
  *
  * @author hitsz
@@ -154,7 +157,7 @@ public abstract class Game extends JPanel {
                     enemyFactory = new BossEnemyFactory();
                     AbstractAircraft newEnemy = enemyFactory.createEnemy();
                     enemyAircrafts.add(newEnemy);
-                    publisher.addEnemy((Enemy) newEnemy);
+                    publisher.addSubscriber((Subscriber) newEnemy);
                     addBoss = false;
                 } else if (randEnemy.nextInt(100) < 15) {
                     // 产生精英敌机
@@ -162,7 +165,7 @@ public abstract class Game extends JPanel {
                         enemyFactory = new EliteEnemyFactory();
                         AbstractAircraft newEnemy = enemyFactory.createEnemy();
                         enemyAircrafts.add(newEnemy);
-                        publisher.addEnemy((Enemy) newEnemy);
+                        publisher.addSubscriber((Subscriber) newEnemy);
                     }
                 } else {
                     // 产生普通敌机
@@ -170,7 +173,7 @@ public abstract class Game extends JPanel {
                         enemyFactory = new MobEnemyFactory();
                         AbstractAircraft newEnemy = enemyFactory.createEnemy();
                         enemyAircrafts.add(newEnemy);
-                        publisher.addEnemy((Enemy) newEnemy);
+                        publisher.addSubscriber((Subscriber) newEnemy);
                     }
                 }
 
@@ -186,6 +189,9 @@ public abstract class Game extends JPanel {
 
             // 道具移动
             propMoveAction();
+
+            // 出界检测
+            outCheckAction();
 
             // 撞击检测
             crashCheckAction();
@@ -256,7 +262,11 @@ public abstract class Game extends JPanel {
     private void shootAction() {
         // 敌机射击
         for (AbstractAircraft enemyAircraft : enemyAircrafts) {
-            enemyBullets.addAll(enemyAircraft.shoot());
+            List<BaseBullet> bullets = enemyAircraft.shoot();
+            enemyBullets.addAll(bullets);
+            for (BaseBullet bullet : bullets) {
+                publisher.addSubscriber(bullet);
+            }
         }
         // 英雄射击
         heroBullets.addAll(heroAircraft.shoot());
@@ -284,6 +294,8 @@ public abstract class Game extends JPanel {
     }
 
     /**
+     * 获取分数文件
+     *
      * @return scoreFile 分数文件的地址
      */
     protected abstract File getScoreFile();
@@ -291,10 +303,31 @@ public abstract class Game extends JPanel {
     private void outCheckAction() {
         for (AbstractAircraft enemyAircraft : enemyAircrafts) {
             if (enemyAircraft.getLocationY() >= Main.WINDOW_HEIGHT) {
-                publisher.removeEnemy((Enemy) enemyAircraft);
+                publisher.removeSubscriber((Subscriber) enemyAircraft);
                 enemyAircraft.vanish();
             }
         }
+        for (BaseBullet bullet : enemyBullets) {
+            // 判定 x 轴出界
+            if (bullet.getLocationX() <= 0 || bullet.getLocationX() >= Main.WINDOW_WIDTH) {
+                publisher.removeSubscriber(bullet);
+                bullet.vanish();
+            }
+            if (bullet.getLocationY() >= Main.WINDOW_HEIGHT) {
+                publisher.removeSubscriber(bullet);
+                bullet.vanish();
+            }
+        }
+        for (BaseBullet bullet : heroBullets) {
+            // 判定 x 轴出界
+            if (bullet.getLocationX() <= 0 || bullet.getLocationX() >= Main.WINDOW_WIDTH) {
+                bullet.vanish();
+
+            } else if (bullet.getLocationY() <= 0) {
+                bullet.vanish();
+            }
+        }
+
     }
 
     /**
@@ -317,6 +350,7 @@ public abstract class Game extends JPanel {
                 // 英雄机撞击到敌机子弹
                 // 英雄机损失一定生命值
                 heroAircraft.decreaseHp(bullet.getPower());
+                publisher.removeSubscriber(bullet);
                 bullet.vanish();
             }
         }
@@ -352,36 +386,45 @@ public abstract class Game extends JPanel {
         }
 
         // 我方获得道具，道具生效
-        for (AbstractProp prop : props) {
+        for (int i = 0; i< props.size();i++) {
+            AbstractProp prop= props.get(i);
             if (prop.notValid()) {
                 continue;
             }
             if (heroAircraft.crash(prop)) {
                 prop.active(heroAircraft, publisher);
+                for(AbstractAircraft enemyAircraft:enemyAircrafts)
+                {
+                    enemyCheckDeath(enemyAircraft);
+                }
                 prop.vanish();
             }
+        }
+    }
+
+    public void scoreAdd() {
+        score += 10;
+        if (score % bossScore == 0) {
+            addBoss = true;
         }
     }
 
     public void enemyCheckDeath(AbstractAircraft enemyAircraft) {
         if (enemyAircraft.notValid()) {
             // 获得分数，获得道具补给
-            score += 10;
-            if (score % bossScore == 0) {
-                addBoss = true;
-            }
+            scoreAdd();
             if (enemyAircraft instanceof BossEnemy) {
                 bossMusic.setLoop(false);
                 bossMusic.stopMusic();
                 backGroundMusic = new MusicThread("src/videos/bgm.wav");
                 backGroundMusic.start();
                 backGroundMusic.setLoop(true);
-                props.addAll(((BossEnemy) enemyAircraft).dropProp());
+                ((BossEnemy) enemyAircraft).dropProp(props);
             }
             if (enemyAircraft instanceof EliteEnemy) {
-                props.addAll(((EliteEnemy) enemyAircraft).dropProp());
+                ((EliteEnemy) enemyAircraft).dropProp(props);
             }
-            publisher.removeEnemy((Enemy) enemyAircraft);
+            publisher.removeSubscriber((Subscriber) enemyAircraft);
         }
     }
 

@@ -1,28 +1,34 @@
 package edu.hitsz.application;
 
-import edu.hitsz.aircraft.Enemy;
+import edu.hitsz.prop.AbstractProp;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 【模板模式】
+ *
+ * @author hhr
+ */
 public class Publisher {
-    private List<Enemy> enemyList = new ArrayList<>();
+    public List<Subscriber> subscriberList = new ArrayList<>();
 
-    public void addEnemy(Enemy enemy){
-        enemyList.add(enemy);
+    public void addSubscriber(Subscriber subscriber) {
+        subscriberList.add(subscriber);
     }
 
-    public void removeEnemy(Enemy enemy){
-        enemyList.remove(enemy);
+    public void removeSubscriber(Subscriber subscriber) {
+        subscriberList.remove(subscriber);
     }
 
-    public void notifyAllEnemies(){
-        for (Enemy enemy:enemyList){
-            enemy.update();
+    public void notifyAllEnemies() {
+        for (Subscriber subscriber : subscriberList) {
+            subscriber.update();
         }
+        subscriberList.clear();
     }
 
-    public void bombActive(){
+    public void bombActive() {
         notifyAllEnemies();
     }
 }
