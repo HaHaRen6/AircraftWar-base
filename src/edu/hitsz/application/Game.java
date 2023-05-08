@@ -6,7 +6,6 @@ import edu.hitsz.DAO.ScoreInfo;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.factory.BossEnemyFactory;
 import edu.hitsz.factory.EliteEnemyFactory;
 import edu.hitsz.factory.EnemyFactory;
 import edu.hitsz.factory.MobEnemyFactory;
@@ -25,6 +24,9 @@ import java.util.Random;
 
 /**
  * 【模板模式】抽象类
+ * 模板模式已完成：
+ * 1. 简单模式不产生boss，中等模式、困难模式产生boss
+ * 2. 不同模式最大飞机数不同
  * <p>
  * 游戏主面板，游戏启动
  *
@@ -67,9 +69,22 @@ public abstract class Game extends JPanel {
     private EnemyFactory enemyFactory;
 
     /**
-     * 屏幕中出现的敌机最大数量
+     * 同时存在的最大敌机数量
+     *
+     * @return 最大敌机数量
      */
-    private final int enemyMaxNumber = 5;
+    protected abstract int maxEnemyNumber();
+
+    private float eliteProbability;
+
+    /**
+     * 产生精英敌机的概率
+     * <p>
+     *
+     * @param time 随时间变化
+     * @return 概率（小数）
+     */
+    protected abstract float eliteProbability(int time);
 
     /**
      * 当前得分
@@ -90,7 +105,7 @@ public abstract class Game extends JPanel {
     /**
      * 产生Boss机的分数阈值
      */
-    private final int bossScore = 200;
+    private final int bossScore = 300;
 
     /**
      * 游戏结束标志0
@@ -130,6 +145,8 @@ public abstract class Game extends JPanel {
         backGroundMusic.start();
         backGroundMusic.setLoop(true);
 
+        eliteProbability = eliteProbability(0);
+
         // 定时任务：绘制、对象产生、碰撞判定、击毁及结束判定
         Runnable task = () -> {
 
@@ -146,6 +163,10 @@ public abstract class Game extends JPanel {
                  * 新敌机产生
                  */
                 if (addBoss) {
+                    // 中等难度和困难难度精英敌机产生概率随时间变化
+                    eliteProbability = eliteProbability(time);
+                    System.out.println("精英敌机产生概率: " + eliteProbability);
+
                     // 产生Boss机
                     bossMusic = new MusicThread("src/videos/bgm_boss.wav");
                     AbstractAircraft newEnemy = createBoss(backGroundMusic, bossMusic, publisher);
@@ -153,9 +174,9 @@ public abstract class Game extends JPanel {
                         enemyAircrafts.add(newEnemy);
                     }
                     addBoss = false;
-                } else if (randEnemy.nextInt(100) < 15) {
+                } else if (randEnemy.nextFloat() < eliteProbability) {
                     // 产生精英敌机
-                    if (enemyAircrafts.size() < enemyMaxNumber) {
+                    if (enemyAircrafts.size() < maxEnemyNumber()) {
                         enemyFactory = new EliteEnemyFactory();
                         AbstractAircraft newEnemy = enemyFactory.createEnemy();
                         enemyAircrafts.add(newEnemy);
@@ -163,7 +184,7 @@ public abstract class Game extends JPanel {
                     }
                 } else {
                     // 产生普通敌机
-                    if (enemyAircrafts.size() < enemyMaxNumber) {
+                    if (enemyAircrafts.size() < maxEnemyNumber()) {
                         enemyFactory = new MobEnemyFactory();
                         AbstractAircraft newEnemy = enemyFactory.createEnemy();
                         enemyAircrafts.add(newEnemy);
@@ -375,8 +396,6 @@ public abstract class Game extends JPanel {
                     // 敌机撞击到英雄机子弹，敌机损失一定生命值
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
-                    System.out.println(enemyAircraft + " " + enemyAircraft.getHp());
-
                     enemyCheckDeath(enemyAircraft);
                 }
                 // 英雄机 与 敌机 相撞，均损毁
@@ -387,7 +406,7 @@ public abstract class Game extends JPanel {
             }
         }
         // 我方获得道具，道具生效
-        // 不能改成 for-each
+        // !! 不能改成 for-each !!
         for (int i = 0; i < props.size(); i++) {
             AbstractProp prop = props.get(i);
             if (prop.notValid()) {

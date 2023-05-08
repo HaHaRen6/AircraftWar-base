@@ -7,14 +7,14 @@ import edu.hitsz.factory.EnemyFactory;
 import java.awt.*;
 import java.io.File;
 
-public class HardGame extends Game{
+public class HardGame extends Game {
     @Override
     protected Image getBackGround() {
         return ImageManager.BACKGROUND_IMAGE3;
     }
 
     @Override
-    protected File getScoreFile(){
+    protected File getScoreFile() {
         return new File("score/HardGameScore.txt");
     }
 
@@ -32,4 +32,30 @@ public class HardGame extends Game{
 
         return newEnemy;
     }
+
+    /**
+     * 同时存在的最大敌机数量
+     *
+     * @return 最大敌机数量
+     */
+    @Override
+    protected int maxEnemyNumber() {
+        return 7;
+    }
+
+    /**
+     * 产生精英敌机的概率
+     * <p>
+     *
+     * @param time 随时间变化
+     * @return 概率（小数）
+     */
+    @Override
+    protected float eliteProbability(int time) {
+        return (float) (0.1 + (float) time / 200000);
+    }
+
+
+
+
 }

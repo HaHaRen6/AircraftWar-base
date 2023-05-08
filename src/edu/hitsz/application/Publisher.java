@@ -11,7 +11,7 @@ import java.util.List;
  * @author hhr
  */
 public class Publisher {
-    public List<Subscriber> subscriberList = new ArrayList<>();
+    private List<Subscriber> subscriberList = new ArrayList<>();
 
     public void addSubscriber(Subscriber subscriber) {
         subscriberList.add(subscriber);

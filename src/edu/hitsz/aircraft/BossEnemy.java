@@ -103,9 +103,11 @@ public class BossEnemy extends AbstractAircraft implements Enemy, Subscriber {
     @Override
     public void update() {
         if (hp <= 100) {
+            System.out.println("Boss扣血: 100，剩余: 0");
             vanish();
         } else {
             hp -= 100;
+            System.out.println("Boss扣血: 100，剩余: " + hp);
         }
     }
 }

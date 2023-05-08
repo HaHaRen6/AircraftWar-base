@@ -22,4 +22,14 @@ public class EasyGame extends Game {
     protected AbstractAircraft createBoss(MusicThread backGroundMusic, MusicThread bossMusic, Publisher publisher) {
         return null;
     }
+
+    @Override
+    protected int maxEnemyNumber(){
+        return 4;
+    }
+
+    @Override
+    protected float eliteProbability(int time) {
+        return 0;
+    }
 }
