@@ -4,6 +4,7 @@ import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.factory.BossEnemyFactory;
 import edu.hitsz.factory.EliteEnemyFactory;
 import edu.hitsz.factory.EnemyFactory;
+import edu.hitsz.factory.MobEnemyFactory;
 
 import java.awt.*;
 import java.io.File;
@@ -28,7 +29,7 @@ public class EasyGame extends Game {
     }
 
     @Override
-    protected int maxEnemyNumber(){
+    protected int maxEnemyNumber() {
         return 4;
     }
 
@@ -38,8 +39,22 @@ public class EasyGame extends Game {
     }
 
     @Override
-    protected AbstractAircraft createEliteEnemy(Publisher publisher, int time){
+    protected AbstractAircraft createEliteEnemy(Publisher publisher, int time) {
         // 简单模式无精英机
         return null;
+    }
+
+    @Override
+    protected AbstractAircraft createMobEnemy(Publisher publisher, int time) {
+        EnemyFactory enemyFactory = new MobEnemyFactory();
+        AbstractAircraft newEnemy = enemyFactory.createEnemy();
+        publisher.addSubscriber((Subscriber) newEnemy);
+        return newEnemy;
+    }
+
+    @Override
+    protected int bossScore() {
+        // 简单模式无boss
+        return 300;
     }
 }

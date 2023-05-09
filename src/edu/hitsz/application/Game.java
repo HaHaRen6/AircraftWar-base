@@ -32,6 +32,8 @@ import java.util.Random;
  * 1. 不同模式最大飞机数不同
  * 2. 不同模式精英敌机产生概率不同（不超过50%）
  * 3. 精英机血量随时间变化
+ * 4. 不同难度boss机产生的分数阈值不同
+ * 5. 普通机速度随时间变化
  * <p>
  * 游戏主面板，游戏启动
  *
@@ -61,12 +63,12 @@ public abstract class Game extends JPanel {
     /**
      * 【数据访问对象模式】数据对象
      */
-    private ScoreDao scoreDao = new ScoreDaoImpl();
+    private final ScoreDao scoreDao = new ScoreDaoImpl();
 
     /**
      * 【观察者模式】发布者
      */
-    private Publisher publisher = new Publisher();
+    private final Publisher publisher = new Publisher();
 
     /**
      * 【工厂模式】敌机工厂
@@ -110,7 +112,7 @@ public abstract class Game extends JPanel {
     /**
      * 产生Boss机的分数阈值
      */
-    private final int bossScore = 300;
+    protected abstract int bossScore();
 
     /**
      * 游戏结束标志0
@@ -172,6 +174,7 @@ public abstract class Game extends JPanel {
                     eliteProbability = eliteProbability(time);
                     System.out.println("精英敌机产生概率: " + eliteProbability);
                     System.out.println("当前精英机血量：" + (90 + time / 2000));
+                    System.out.println("当前普通机速度：" + (6 + time / 10000));
                     // 产生Boss机
                     bossMusic = new MusicThread("src/videos/bgm_boss.wav");
                     AbstractAircraft newEnemy = createBoss(backGroundMusic, bossMusic, publisher);
@@ -188,10 +191,8 @@ public abstract class Game extends JPanel {
                 } else {
                     // 产生普通敌机
                     if (enemyAircrafts.size() < maxEnemyNumber()) {
-                        enemyFactory = new MobEnemyFactory();
-                        AbstractAircraft newEnemy = enemyFactory.createEnemy();
+                        AbstractAircraft newEnemy = createMobEnemy(publisher, time);
                         enemyAircrafts.add(newEnemy);
-                        publisher.addSubscriber((Subscriber) newEnemy);
                     }
                 }
 
@@ -324,6 +325,11 @@ public abstract class Game extends JPanel {
     protected abstract AbstractAircraft createEliteEnemy(Publisher publisher, int time);
 
     /**
+     * @return MobEnemy
+     */
+    protected abstract AbstractAircraft createMobEnemy(Publisher publisher, int time);
+
+    /**
      * 获取分数文件
      *
      * @return scoreFile 分数文件的地址
@@ -432,7 +438,7 @@ public abstract class Game extends JPanel {
 
     public void scoreAdd() {
         score += 10;
-        if (score % bossScore == 0) {
+        if (score % bossScore() == 0) {
             addBoss = true;
         }
     }

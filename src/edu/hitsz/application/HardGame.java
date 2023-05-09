@@ -4,6 +4,7 @@ import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.factory.BossEnemyFactory;
 import edu.hitsz.factory.EliteEnemyFactory;
 import edu.hitsz.factory.EnemyFactory;
+import edu.hitsz.factory.MobEnemyFactory;
 
 import java.awt.*;
 import java.io.File;
@@ -61,15 +62,29 @@ public class HardGame extends Game {
      */
     @Override
     protected float eliteProbability(int time) {
-        return (float) Math.max(0.1 + (float) time / 200000, 50.0);
+        return (float) Math.min(0.1 + (float) time / 200000, 0.5);
     }
 
     @Override
     protected AbstractAircraft createEliteEnemy(Publisher publisher, int time){
         EnemyFactory enemyFactory = new EliteEnemyFactory();
         AbstractAircraft newEnemy = enemyFactory.createEnemy();
-        newEnemy.setHp(90 + time / 1000);
+        newEnemy.setHp(90 + time / 2000);
         publisher.addSubscriber((Subscriber) newEnemy);
         return newEnemy;
+    }
+
+    @Override
+    protected AbstractAircraft createMobEnemy(Publisher publisher, int time) {
+        EnemyFactory enemyFactory = new MobEnemyFactory();
+        AbstractAircraft newEnemy = enemyFactory.createEnemy();
+        newEnemy.setSpeedY(6 + time / 10000);
+        publisher.addSubscriber((Subscriber) newEnemy);
+        return newEnemy;
+    }
+
+    @Override
+    protected int bossScore(){
+        return 300;
     }
 }
