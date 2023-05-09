@@ -24,9 +24,14 @@ import java.util.Random;
 
 /**
  * 【模板模式】抽象类
- * 模板模式已完成：
+ * 模板模式（必做）已完成：
  * 1. 简单模式不产生boss，中等模式、困难模式产生boss
- * 2. 不同模式最大飞机数不同
+ * 2. 难度随时间增加
+ * 3. 困难模式每次召唤改变Boss机血量
+ * 模板模式（选做）已完成：
+ * 1. 不同模式最大飞机数不同
+ * 2. 不同模式精英敌机产生概率不同（不超过50%）
+ * 3. 精英机血量随时间变化
  * <p>
  * 游戏主面板，游戏启动
  *
@@ -166,7 +171,7 @@ public abstract class Game extends JPanel {
                     // 中等难度和困难难度精英敌机产生概率随时间变化
                     eliteProbability = eliteProbability(time);
                     System.out.println("精英敌机产生概率: " + eliteProbability);
-
+                    System.out.println("当前精英机血量：" + (90 + time / 2000));
                     // 产生Boss机
                     bossMusic = new MusicThread("src/videos/bgm_boss.wav");
                     AbstractAircraft newEnemy = createBoss(backGroundMusic, bossMusic, publisher);
@@ -177,10 +182,8 @@ public abstract class Game extends JPanel {
                 } else if (randEnemy.nextFloat() < eliteProbability) {
                     // 产生精英敌机
                     if (enemyAircrafts.size() < maxEnemyNumber()) {
-                        enemyFactory = new EliteEnemyFactory();
-                        AbstractAircraft newEnemy = enemyFactory.createEnemy();
+                        AbstractAircraft newEnemy = createEliteEnemy(publisher, time);
                         enemyAircrafts.add(newEnemy);
-                        publisher.addSubscriber((Subscriber) newEnemy);
                     }
                 } else {
                     // 产生普通敌机
@@ -314,6 +317,11 @@ public abstract class Game extends JPanel {
      * @return boss
      */
     protected abstract AbstractAircraft createBoss(MusicThread backGroundMusic, MusicThread bossMusic, Publisher publisher);
+
+    /**
+     * @return EliteEnemy
+     */
+    protected abstract AbstractAircraft createEliteEnemy(Publisher publisher, int time);
 
     /**
      * 获取分数文件

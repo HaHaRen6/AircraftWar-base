@@ -2,11 +2,15 @@ package edu.hitsz.application;
 
 import edu.hitsz.aircraft.AbstractAircraft;
 import edu.hitsz.factory.BossEnemyFactory;
+import edu.hitsz.factory.EliteEnemyFactory;
 import edu.hitsz.factory.EnemyFactory;
 
 import java.awt.*;
 import java.io.File;
 
+/**
+ * @author hhr
+ */
 public class MediumGame extends Game {
     @Override
     protected Image getBackGround() {
@@ -52,6 +56,16 @@ public class MediumGame extends Game {
      */
     @Override
     protected float eliteProbability(int time) {
-        return (float) (0.1 + (float) time / 200000);
+        return (float) Math.max(0.1 + (float) time / 200000, 50.0);
     }
+
+    @Override
+    protected AbstractAircraft createEliteEnemy(Publisher publisher, int time) {
+        EnemyFactory enemyFactory = new EliteEnemyFactory();
+        AbstractAircraft newEnemy = enemyFactory.createEnemy();
+        newEnemy.setHp(90 + time / 2000);
+        publisher.addSubscriber((Subscriber) newEnemy);
+        return newEnemy;
+    }
+
 }
