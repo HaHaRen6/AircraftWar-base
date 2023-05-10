@@ -16,6 +16,18 @@ public class HardGame extends Game {
     private int bossHp = 240;
 
     @Override
+    protected void outputInformation(){
+        System.out.println("你选择的是困难模式");
+        System.out.println("有boss机，有精英机，难度随时间变化");
+        System.out.println("boss机血量逐次递增");
+        System.out.println("最大飞机数为 7 个");
+        System.out.println("精英机产生概率随时间增加");
+        System.out.println("精英机血量随时间变化");
+        System.out.println("普通机速度随时间变化");
+        System.out.println("产生boss机的分数阈值为 300 分");
+    }
+
+    @Override
     protected Image getBackGround() {
         return ImageManager.BACKGROUND_IMAGE3;
     }

@@ -14,6 +14,13 @@ import java.io.File;
  */
 public class EasyGame extends Game {
     @Override
+    protected void outputInformation(){
+        System.out.println("你选择的是简单模式");
+        System.out.println("无boss机，无精英机，难度不随时间变化");
+        System.out.println("最大飞机数为 4 个");
+    }
+
+    @Override
     protected Image getBackGround() {
         return ImageManager.BACKGROUND_IMAGE1;
     }

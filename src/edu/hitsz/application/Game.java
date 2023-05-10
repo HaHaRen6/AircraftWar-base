@@ -6,9 +6,7 @@ import edu.hitsz.DAO.ScoreInfo;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.factory.EliteEnemyFactory;
 import edu.hitsz.factory.EnemyFactory;
-import edu.hitsz.factory.MobEnemyFactory;
 import edu.hitsz.prop.AbstractProp;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
@@ -25,15 +23,15 @@ import java.util.Random;
 /**
  * 【模板模式】抽象类
  * 模板模式（必做）已完成：
- * 1. 简单模式不产生boss，中等模式、困难模式产生boss
- * 2. 难度随时间增加
+ * 1. 简单模式不产生boss，普通模式、困难模式产生boss
+ * 2. 简单模式难度不随时间增加，普通模式
  * 3. 困难模式每次召唤改变Boss机血量
  * 模板模式（选做）已完成：
  * 1. 不同模式最大飞机数不同
  * 2. 不同模式精英敌机产生概率不同（不超过50%）
  * 3. 精英机血量随时间变化
- * 4. 不同难度boss机产生的分数阈值不同
- * 5. 普通机速度随时间变化
+ * 4. 普通机速度随时间变化
+ * 5. 不同难度boss机产生的分数阈值不同
  * <p>
  * 游戏主面板，游戏启动
  *
@@ -124,6 +122,8 @@ public abstract class Game extends JPanel {
     public Game() {
         // 创建英雄机
         heroAircraft = HeroAircraft.getHeroAircraft();
+
+        outputInformation();
 
         enemyAircrafts = new LinkedList<>();
         heroBullets = new LinkedList<>();
@@ -266,6 +266,11 @@ public abstract class Game extends JPanel {
     //***********************
     //      Action 各部分
     //***********************
+
+    /**
+     * output game's information
+     */
+    protected abstract void outputInformation();
 
     private boolean timeCountAndNewCycleJudge() {
         cycleTime += timeInterval;
