@@ -3,7 +3,6 @@ package edu.hitsz.prop;
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.MusicThread;
 import edu.hitsz.application.Publisher;
-import edu.hitsz.application.Subscriber;
 import edu.hitsz.shootStrategy.DirectShootStrategy;
 import edu.hitsz.shootStrategy.ScatterShootStrategy;
 

@@ -1,7 +1,5 @@
 package edu.hitsz.bullet;
 
-import edu.hitsz.application.Subscriber;
-
 /**
  * @Author hitsz
  */

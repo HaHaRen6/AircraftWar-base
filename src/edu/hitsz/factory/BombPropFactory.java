@@ -1,6 +1,5 @@
 package edu.hitsz.factory;
 
-import edu.hitsz.prop.BloodProp;
 import edu.hitsz.prop.BombProp;
 
 /**

@@ -1,8 +1,6 @@
 package edu.hitsz.application;
 
 import edu.hitsz.aircraft.AbstractAircraft;
-import edu.hitsz.factory.BossEnemyFactory;
-import edu.hitsz.factory.EliteEnemyFactory;
 import edu.hitsz.factory.EnemyFactory;
 import edu.hitsz.factory.MobEnemyFactory;
 

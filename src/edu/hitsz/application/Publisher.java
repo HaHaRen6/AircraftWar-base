@@ -1,7 +1,5 @@
 package edu.hitsz.application;
 
-import edu.hitsz.prop.AbstractProp;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package edu.hitsz.factory;
 
 import edu.hitsz.aircraft.BossEnemy;
-import edu.hitsz.aircraft.EliteEnemy;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
 import edu.hitsz.shootStrategy.ScatterShootStrategy;

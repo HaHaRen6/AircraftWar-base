@@ -7,8 +7,6 @@ import java.util.List;
 /**
  * 【工厂模式】Enemy接口，充当产品角色
  *
- * 【观察者模式】充当订阅者角色
- *
  * @author hhr
  */
 public interface Enemy {

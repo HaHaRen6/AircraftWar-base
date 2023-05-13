@@ -2,7 +2,6 @@ package edu.hitsz.application;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
 
 /**
  * 程序入口
