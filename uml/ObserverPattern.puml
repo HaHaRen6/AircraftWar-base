@@ -1,0 +1,38 @@
+@startuml
+class EnemyBullet {
++ update():void 
+}
+class MobEnemy {
++ update():void 
+}
+class EliteEnemy {
++ update():void 
+}
+
+interface Subscriber {
++ update():void 
+}
+class BossEnemy {
++ update():void
+}
+class Publisher {
+- subscriberList:List<Subscriber> 
++ addSubscriber(Subscriber subscriber):void
++ removeSubscriber(Subscriber subscriber):void
++ notifyAllSubscribers():void
++ bombActive():void 
+}
+
+
+Subscriber <|.. EnemyBullet
+Subscriber <|.. MobEnemy
+Subscriber <|.. EliteEnemy
+Subscriber <|.. BossEnemy
+Publisher <-- Game
+Publisher o--> Subscriber
+EnemyBullet <.. Game
+MobEnemy <.. Game
+EliteEnemy <.. Game
+BossEnemy <.. Game
+
+@enduml

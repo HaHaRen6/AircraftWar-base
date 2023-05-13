@@ -9,7 +9,7 @@ import edu.hitsz.basic.AbstractFlyingObject;
  *
  * @author hitsz
  */
-public abstract class BaseBullet extends AbstractFlyingObject implements Subscriber {
+public abstract class BaseBullet extends AbstractFlyingObject {
 
     private int power = 10;
 
@@ -27,8 +27,4 @@ public abstract class BaseBullet extends AbstractFlyingObject implements Subscri
         return power;
     }
 
-    /**
-     * 【观察者模式】对炸弹爆炸的反应
-     */
-    public abstract void update();
 }

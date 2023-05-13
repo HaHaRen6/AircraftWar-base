@@ -1,0 +1,59 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+abstract class Game{
+- publisher:Publisher
+# {abstract} maxEnemyNumber():int
+# {abstract} eliteProbability(int time):float
+# {abstract} bossScore():int
+# {abstract} createBoss(MusicThread backGroundMusic,
+MusicThread bossMusic, Publisher publisher):AbstractAircraft
+# {abstract} createEliteEnemy(Publisher publisher,int time):AbstractAircraft
+# {abstract} createMobEnemy(Publisher publisher,int time):AbstractAircraft
+# {abstract} getScoreFile():File
+# {abstract} getBackGround():Image
+}
+
+class EasyGame{
+# maxEnemyNumber():int
+# eliteProbability(int time):float
+# bossScore():int
+# createBoss(MusicThread backGroundMusic,
+MusicThread bossMusic, Publisher publisher):AbstractAircraft
+# createEliteEnemy(Publisher publisher,int time):AbstractAircraft
+# createMobEnemy(Publisher publisher,int time):AbstractAircraft
+# getScoreFile():File
+# getBackGround():Image
+}
+Game <|-- EasyGame
+
+class MediumGame{
+# maxEnemyNumber():int
+# eliteProbability(int time):float
+# bossScore():int
+# createBoss(MusicThread backGroundMusic,
+MusicThread bossMusic, Publisher publisher):AbstractAircraft
+# createEliteEnemy(Publisher publisher,int time):AbstractAircraft
+# createMobEnemy(Publisher publisher,int time):AbstractAircraft
+# getScoreFile():File
+# getBackGround():Image
+}
+Game <|-- MediumGame
+
+class HardGame{
+- bossHp:int
+# maxEnemyNumber():int
+# eliteProbability(int time):float
+# bossScore():int
+# createBoss(MusicThread backGroundMusic,
+MusicThread bossMusic, Publisher publisher):AbstractAircraft
+# createEliteEnemy(Publisher publisher,int time):AbstractAircraft
+# createMobEnemy(Publisher publisher,int time):AbstractAircraft
+# getScoreFile():File
+# getBackGround():Image
+}
+Game <|-- HardGame
+
+
+
+@enduml

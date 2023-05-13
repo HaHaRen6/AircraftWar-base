@@ -19,7 +19,7 @@ public class Publisher {
         subscriberList.remove(subscriber);
     }
 
-    public void notifyAllEnemies() {
+    public void notifyAllSubscribers() {
         for (Subscriber subscriber : subscriberList) {
             subscriber.update();
         }
@@ -27,6 +27,6 @@ public class Publisher {
     }
 
     public void bombActive() {
-        notifyAllEnemies();
+        notifyAllSubscribers();
     }
 }

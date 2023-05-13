@@ -1,0 +1,118 @@
+@startuml
+abstract class AbstractFlyingObject {
+# locationX:int 
+# locationY:int 
+# speedX:int 
+# speedY:int 
+# image:BufferedImage 
+# width:int 
+# height:int 
+# isValid:boolean 
++ forward():void 
++ crash(AbstractFlyingObject flyingObject):boolean
++ getLocationX():int 
++ getLocationY():int 
++ setLocation(double locationX, double locationY):void
++ getSpeedY():int 
++ getImage():BufferedImage 
++ getWidth():int 
++ getHeight():int 
++ notValid():boolean 
++ vanish():void 
+}
+class EliteEnemy {
+- power:int 
+- direction:int 
++ shoot():List<BaseBullet> 
++ dropProp(List<AbstractProp> props):void
++ update():void 
+}
+abstract class AbstractAircraft {
+# maxHp:int 
+# shootStrategy:ShootStrategy 
+# hp:int 
++ setShootStrategy(ShootStrategy shootStrategy):void
++ increaseHp(int hp):void
++ decreaseHp(int hp):void
++ getHp():int 
++ setHp(int hp):void
++ setSpeedY(int speedY):void
++ {abstract}shoot():List<BaseBullet> 
+}
+class BossEnemy {
+- dropNum:int
+- power:int
+- direction:int
++ forward():void
++ shoot():List<BaseBullet>
++ dropProp(List<AbstractProp> props):void
++ update():void
+}
+abstract class AbstractProp {
++ forward():void 
++ {abstract}active(HeroAircraft heroAircraft,Publisher publisher):void
+}
+class BloodProp {
+- hpIncrease:int 
++ active(HeroAircraft heroAircraft,Publisher publisher):void
+}
+class EnemyBullet {
++ update():void 
+}
+class HeroAircraft {
+- power:int 
+- direction:int 
+- {static} heroAircraft:HeroAircraft 
++ {static} getHeroAircraft():HeroAircraft 
++ forward():void 
++ shoot():List<BaseBullet> 
+}
+class MobEnemy {
++ shoot():List<BaseBullet> 
++ dropProp(List<AbstractProp> props):void
++ update():void 
+}
+class BulletProp {
+- flag:boolean 
++ active(HeroAircraft heroAircraft,Publisher publisher):void
+}
+interface Enemy {
++ {abstract} dropProp(List<AbstractProp> props):void
+}
+class HeroBullet {
++ update():void 
+}
+abstract class BaseBullet {
+- power:int 
++ forward():void 
++ getPower():int 
++ {abstract} update():void
+}
+class BombProp {
++ active(HeroAircraft heroAircraft,Publisher publisher):void
+}
+interface Subscriber {
++ {abstract} update():void
+}
+
+
+Enemy <|.. EliteEnemy
+Subscriber <|.. EliteEnemy
+AbstractAircraft <|-- EliteEnemy
+AbstractFlyingObject <|-- AbstractAircraft
+Enemy <|.. BossEnemy
+Subscriber <|.. BossEnemy
+AbstractAircraft <|-- BossEnemy
+AbstractFlyingObject <|-- AbstractProp
+AbstractProp <|-- BloodProp
+BaseBullet <|-- EnemyBullet
+AbstractAircraft <|-- HeroAircraft
+Enemy <|.. MobEnemy
+Subscriber <|.. MobEnemy
+AbstractAircraft <|-- MobEnemy
+AbstractProp <|-- BulletProp
+BaseBullet <|-- HeroBullet
+Subscriber <|.. BaseBullet
+AbstractFlyingObject <|-- BaseBullet
+AbstractProp <|-- BombProp
+@enduml

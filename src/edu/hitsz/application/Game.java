@@ -9,7 +9,6 @@ import edu.hitsz.aircraft.EliteEnemy;
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.basic.AbstractFlyingObject;
 import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.factory.EnemyFactory;
 import edu.hitsz.prop.AbstractProp;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
@@ -75,11 +74,6 @@ public abstract class Game extends JPanel {
     private final Publisher publisher = new Publisher();
 
     /**
-     * 【工厂模式】敌机工厂
-     */
-    private EnemyFactory enemyFactory;
-
-    /**
      * 同时存在的最大敌机数量
      *
      * @return 最大敌机数量
@@ -113,8 +107,11 @@ public abstract class Game extends JPanel {
     private final int cycleDuration = 600;
     private int cycleTime = 0;
 
+
     /**
      * 产生Boss机的分数阈值
+     *
+     * @return 分数阈值
      */
     protected abstract int bossScore();
 
@@ -295,7 +292,7 @@ public abstract class Game extends JPanel {
             List<BaseBullet> bullets = enemyAircraft.shoot();
             enemyBullets.addAll(bullets);
             for (BaseBullet bullet : bullets) {
-                publisher.addSubscriber(bullet);
+                publisher.addSubscriber((Subscriber) bullet);
             }
         }
         // 英雄射击
@@ -357,11 +354,11 @@ public abstract class Game extends JPanel {
         for (BaseBullet bullet : enemyBullets) {
             // 判定 x 轴出界
             if (bullet.getLocationX() <= 0 || bullet.getLocationX() >= Main.WINDOW_WIDTH) {
-                publisher.removeSubscriber(bullet);
+                publisher.removeSubscriber((Subscriber) bullet);
                 bullet.vanish();
             }
             if (bullet.getLocationY() >= Main.WINDOW_HEIGHT) {
-                publisher.removeSubscriber(bullet);
+                publisher.removeSubscriber((Subscriber) bullet);
                 bullet.vanish();
             }
         }
@@ -397,7 +394,7 @@ public abstract class Game extends JPanel {
                 // 英雄机撞击到敌机子弹
                 // 英雄机损失一定生命值
                 heroAircraft.decreaseHp(bullet.getPower());
-                publisher.removeSubscriber(bullet);
+                publisher.removeSubscriber((Subscriber) bullet);
                 bullet.vanish();
             }
         }
